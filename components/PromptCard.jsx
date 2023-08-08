@@ -33,7 +33,7 @@ const PromptCard = ({
               <img
                 src={chainImg}
                 alt=""
-                className="w-[34px] absolute top-4 right-7 bg-purple-800 rounded-2xl"
+                className="w-[34px] p-1 absolute top-4 right-7 bg-purple-800 rounded-2xl"
               />
             </div>
 
