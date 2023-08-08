@@ -1,11 +1,12 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import React from 'react';
+import Technologies from './Technologies';
 
 const Hero = () => {
   return (
     <section className="container max-w-[64rem] mx-auto  text-white relative px-6">
       <div className="flex flex-col items-center">
-        <p className="w-full text-center text-[32px] leading-[38px] sm:text-7xl sm:leading-[84px] font-bold mt-[calc(128px-96px)] sm:mt-[calc(208px-96px)] transition-all">
+        <p className="w-full text-center text-[32px] leading-[38px] sm:text-7xl sm:leading-[84px] font-bold mt-[calc(128px-96px)] sm:mt-[calc(160px-96px)] transition-all">
           <span className="text-transparent bg-clip-text bg-primer">
             Monetize Your Creativity
           </span>{' '}
@@ -28,6 +29,8 @@ const Hero = () => {
           </span>
         </button>
       </div>
+
+      <Technologies />
     </section>
   );
 };
