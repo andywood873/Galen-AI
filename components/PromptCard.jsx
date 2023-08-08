@@ -9,7 +9,15 @@ const getRandomWord = () => {
   return words[randomIndex];
 };
 
-const PromptCard = ({ img, name, listState, owner, price, attributes }) => {
+const PromptCard = ({
+  img,
+  name,
+  listState,
+  owner,
+  price,
+  model,
+  chainImg,
+}) => {
   return (
     <div className="border-gradient relative mb-10 flex justify-center items-center rounded-lg">
       <div className="w-full p-2 h-full cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center bg-black">
@@ -23,14 +31,14 @@ const PromptCard = ({ img, name, listState, owner, price, attributes }) => {
           <div className="w-full">
             <div>
               <img
-                src="zora.png"
+                src={chainImg}
                 alt=""
-                className="w-[27px] absolute top-4 right-7 bg-purple-800 rounded-2xl"
+                className="w-[34px] absolute top-4 right-7 bg-purple-800 rounded-2xl"
               />
             </div>
 
             <span className="text-gray-300 absolute top-4 left-4 bg-purple-700 p-1 px-4 text-sm rounded-full font-bold">
-              {attributes}
+              {model}
             </span>
 
             <h3 className="mt-1 text-md text-center font-bold text-gray-300 w-full pt-2">
