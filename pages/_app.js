@@ -16,7 +16,7 @@ const ZoraGoerli = {
   id: 999,
   name: 'Zora Goerli',
   network: 'zora-goerli',
-  iconUrl: 'https://example.com/icon.svg',
+  iconUrl: 'https://avatars.githubusercontent.com/u/60056322?s=280&v=4',
   iconBackground: '#fff',
   nativeCurrency: {
     decimals: 18,
@@ -41,7 +41,8 @@ const BaseGoerli = {
   id: 84531,
   name: 'Base Goerli',
   network: 'base-goerli',
-  iconUrl: 'https://example.com/icon.svg',
+  iconUrl:
+    'https://altcoinsbox.com/wp-content/uploads/2023/02/base-logo-in-blue.png',
   iconBackground: '#fff',
   nativeCurrency: {
     decimals: 18,

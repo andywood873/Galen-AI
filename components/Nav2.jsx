@@ -20,7 +20,7 @@ const Nav2 = () => {
           : ''
       }
     >
-      <section className="container max-w-[64rem] mx-auto px-6 sticky">
+      <section className="container max-w-[72rem] mx-auto px-6 sticky">
         <div className="relative flex items-center justify-between h-24">
           <div className="flex items-center justify-between w-full">
             <Link
@@ -34,7 +34,7 @@ const Nav2 = () => {
               <p className="text-white text-[25px] font-bold">Avalon</p>
             </Link>
             <div className="hidden sm:flex items-center w-full justify-center transition-all">
-              <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all">
+              <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all ml-[100px]">
                 <button type="button" className="text-base font-normal">
                   Home
                 </button>
@@ -53,7 +53,7 @@ const Nav2 = () => {
               </div>
             </div>
             <div>
-              <ConnectButton />
+              <ConnectButton showBalance={false} />
             </div>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <Link href="/profile">
@@ -61,7 +61,7 @@ const Nav2 = () => {
             </Link>
           </div>
 
-          <div className="absolute inset-y-0 right-0 flex items-center transition-all sm:hidden">
+          {/* <div className="absolute inset-y-0 right-0 flex items-center transition-all sm:hidden">
             <button
               className="min-[412px]:text-white min-[412px]:bg-[#101010]/[.3]  min-[412px]:backdrop-blur-lg text-white rounded-sm w-6 h-6 inline-flex items-center justify-center rounded-mdx hover:bg-none focus:outline-none focus:ring-none focus:ring-none transition-all"
               id="headlessui-disclosure-button-:R15id6:"
@@ -103,7 +103,7 @@ const Nav2 = () => {
                 ></rect>
               </svg>
             </button>
-          </div>
+          </div> */}
         </div>
       </section>
       <ChooseCreate
