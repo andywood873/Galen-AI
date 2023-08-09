@@ -8,6 +8,8 @@ import CreateForm from './CreateForm';
 import Preset from './ai-params/Preset';
 import ClipGuidancePreset from './ai-params/ClipGuidancePreset';
 import CfgScale from './ai-params/CfgScale';
+import Steps from './ai-params/Steps';
+import Dimensions from './ai-params/Dimensions';
 
 const CreateImageForm = ({ onNext }) => {
   const {
@@ -54,7 +56,7 @@ const CreateImageForm = ({ onNext }) => {
                   className="w-[80px] ml-6 mb-4 h-[90px] rounded-lg"
                 />
                 <p className="text-white mt-3 text-center italic font-bold">
-                  Realism Engine
+                  Epic Diffusion
                 </p>
               </div>
               <div
@@ -111,19 +113,29 @@ const CreateImageForm = ({ onNext }) => {
           </div>
 
           <div className="flex items-center gap-8 mt-4">
-            <div className="py-2 ml-[150px] text-white">
+            <div className="py-2 ml-[150px] text-gray-300">
               <p className="font-bold">Style_Preset:</p>
               <Preset />
             </div>
 
-            <div className="py-2 text-white">
+            <div className="py-2 text-gray-300">
               <p className="font-bold">Clip_Guidance_Preset:</p>
               <ClipGuidancePreset />
             </div>
 
-            <div className="py-2 text-white">
+            <div className="py-2 text-gray-300">
               <p className="font-bold">Cfg_Scale:</p>
               <CfgScale />
+            </div>
+
+            <div className="py-2 text-gray-300">
+              <p className="font-bold">Steps:</p>
+              <Steps />
+            </div>
+
+            <div className="py-2 text-gray-300">
+              <p className="font-bold">Dimensions:</p>
+              <Dimensions />
             </div>
           </div>
 

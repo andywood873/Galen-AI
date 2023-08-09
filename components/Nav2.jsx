@@ -52,15 +52,12 @@ const Nav2 = () => {
                 </button>
               </div>
             </div>
-            <a
-              className="flex mr-[calc(24px+16px)] sm:mr-0 justify-center space-x-2 items-center bg-black text-white border-primer rounded-lg px-[1.5rem] text-base font-bold h-10 sm:h-12 min-w-[105px] sm:min-w-[140px] transition-all"
-              rel="noreferrer"
-            >
+            <div>
               <ConnectButton />
-            </a>
+            </div>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <Link href="/profile">
-              <span className="text-end p-4 px-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full" />
+              <span className="text-end p-2 px-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full" />
             </Link>
           </div>
 

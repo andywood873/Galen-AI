@@ -82,7 +82,7 @@ const Navbar = () => {
           </div>
           <div className="absolute inset-y-0 right-0 flex items-center transition-all sm:hidden">
             <button
-              className="min-[412px]:text-white min-[412px]:bg-[#101010]/[.3] min-[412px]:bg-inherit min-[412px]:backdrop-blur-lg text-white rounded-sm w-6 h-6 inline-flex items-center justify-center rounded-mdx hover:bg-none focus:outline-none focus:ring-none focus:ring-none transition-all"
+              className="min-[412px]:text-white min-[412px]:bg-[#101010]/[.3] min-[412px]:backdrop-blur-lg text-white rounded-sm w-6 h-6 inline-flex items-center justify-center rounded-mdx hover:bg-none focus:outline-none focus:ring-none focus:ring-none transition-all"
               id="headlessui-disclosure-button-:R15id6:"
               type="button"
               aria-expanded="false"
