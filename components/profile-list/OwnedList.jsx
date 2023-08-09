@@ -14,6 +14,34 @@ const OwnedList = () => {
         owner="0x4352...77"
         nftAddress="0x737849..."
       />
+      <OwnedCard
+        img="2.jpg"
+        name="Helena LOTR"
+        model="Stable Diffusion"
+        owner="0x4352...77"
+        nftAddress="0x737849..."
+      />
+      <OwnedCard
+        img="4.jpg"
+        name="Kaneki Warrior"
+        model="Stable Diffusion"
+        owner="0x4352...77"
+        nftAddress="0x737849..."
+      />
+      <OwnedCard
+        img="5.jpg"
+        name="Owl Eyes"
+        model="Stable Diffusion"
+        owner="0x4352...77"
+        nftAddress="0x737849..."
+      />
+      <OwnedCard
+        img="3.jpg"
+        name="Hell Abyss"
+        model="Stable Diffusion"
+        owner="0x4352...77"
+        nftAddress="0x737849..."
+      />
     </div>
   );
 };

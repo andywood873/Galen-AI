@@ -20,7 +20,7 @@ const Nav2 = () => {
           : ''
       }
     >
-      <section className="container max-w-[72rem] mx-auto px-6 sticky">
+      <section className="container max-w-[78rem] mx-auto px-6 sticky">
         <div className="relative flex items-center justify-between h-24">
           <div className="flex items-center justify-between w-full">
             <Link
@@ -34,7 +34,7 @@ const Nav2 = () => {
               <p className="text-white text-[25px] font-bold">Avalon</p>
             </Link>
             <div className="hidden sm:flex items-center w-full justify-center transition-all">
-              <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all ml-[100px]">
+              <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all">
                 <button type="button" className="text-base font-normal">
                   Home
                 </button>
@@ -52,12 +52,12 @@ const Nav2 = () => {
                 </button>
               </div>
             </div>
-            <div>
+            <div className="absolute right-12">
               <ConnectButton showBalance={false} />
             </div>
             &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
             <Link href="/profile">
-              <span className="text-end p-2 px-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full" />
+              <span className="text-end ml-[80px] p-2 px-4 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full" />
             </Link>
           </div>
 
