@@ -10,6 +10,7 @@ import {
 import '@rainbow-me/rainbowkit/styles.css';
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
 import merge from 'lodash.merge';
+import { FormProvider } from '@/context/formContext';
 
 const ZoraGoerli = {
   id: 999,
@@ -91,9 +92,9 @@ export default function App({ Component, pageProps }) {
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={myTheme} coolMode>
-        {/* <DomainContextProvider> */}
-        <Component {...pageProps} />
-        {/* </DomainContextProvider> */}
+        <FormProvider>
+          <Component {...pageProps} />
+        </FormProvider>
       </RainbowKitProvider>
     </WagmiConfig>
   );
