@@ -5,7 +5,7 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(' ');
 }
 
-export default function TabHeadless() {
+export default function ExploreTab() {
   let [categories] = useState({
     Recent: [
       {

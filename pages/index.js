@@ -1,9 +1,9 @@
 /* eslint-disable @next/next/no-img-element */
-import Navbar from '@/components/Navbar';
+import Navbar from '@/components/layout/Navbar';
 import React from 'react';
-import Hero from '@/components/Hero';
+import Hero from '@/components/layout/Hero';
 import Explore from '@/components/Explore';
-import Footer from '@/components/Footer';
+import Footer from '@/components/layout/Footer';
 
 const Home = () => {
   return (

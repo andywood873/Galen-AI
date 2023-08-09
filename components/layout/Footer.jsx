@@ -1,6 +1,6 @@
 'use client';
 
-import { socials } from '../constants';
+import { socials } from '../../constants';
 import { SiHiveBlockchain } from 'react-icons/si';
 
 const Footer = () => (

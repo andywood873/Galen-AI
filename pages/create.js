@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
-import Nav2 from '@/components/Nav2';
+import Nav2 from '@/components/layout/Nav2';
 import CreateImageForm from '@/components/CreateImageForm';
 import { useContext } from 'react';
 import { FormContext } from '@/context/formContext';

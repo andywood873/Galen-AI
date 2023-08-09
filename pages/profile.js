@@ -1,6 +1,7 @@
 import React from 'react';
-import Nav2 from '@/components/Nav2';
+import Nav2 from '@/components/layout/Nav2';
 import ProfileHeader from '@/components/ProfileHeader';
+import ProfileTab from '@/components/tab/ProfileTab';
 
 const Profile = () => {
   return (
@@ -9,6 +10,9 @@ const Profile = () => {
         <Nav2 />
       </div>
       <ProfileHeader />
+      <div className="mt-[120px]">
+        <ProfileTab />
+      </div>
     </>
   );
 };

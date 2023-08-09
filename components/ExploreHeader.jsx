@@ -1,5 +1,5 @@
 import React from 'react';
-import TabHeadless from './tab/Tab';
+import TabHeadless from './tab/ExploreTab';
 
 const ExploreHeader = () => {
   return (

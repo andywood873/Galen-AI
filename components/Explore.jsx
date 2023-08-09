@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import PromptCard from './PromptCard';
-import TabHeadless from './tab/Tab';
+import PromptCard from './cards/PromptCard';
+import ExploreTab from './tab/ExploreTab';
 import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
 
@@ -11,7 +11,7 @@ const Explore = () => {
         Explore Prompts
       </h1>
       <div className="ml-[60px]">
-        <TabHeadless />
+        <ExploreTab />
       </div>
       <div className="grid grid-cols-5 gap-6 mt-4 mx-[60px]">
         <PromptCard
