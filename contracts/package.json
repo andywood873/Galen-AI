@@ -10,6 +10,7 @@
     "@openzeppelin/contracts-upgradeable": "^4.8.0",
     "@openzeppelin/hardhat-upgrades": "^1.25.3",
     "base64-sol": "^1.1.0",
+    "chai": "^4.3.7",
     "dotenv": "^16.0.2",
     "ethers": "^5.7.2"
   }
