@@ -63,8 +63,34 @@ const BaseGoerli = {
   testnet: true,
 };
 
+const ModeTestnet = {
+  id: 919,
+  name: 'Mode Testnet',
+  network: 'mode-testnet',
+  iconUrl:
+    'https://img.freepik.com/free-photo/golden-yellow-seamless-venetian-plaster-background_24972-294.jpg?w=2000',
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Mode Sepolia Ether',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://sepolia.mode.network/'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Mode Explorer',
+      url: 'https://sepolia.explorer.mode.network/',
+    },
+  },
+  testnet: true,
+};
+
 const { provider, chains } = configureChains(
-  [ZoraGoerli, BaseGoerli],
+  [ZoraGoerli, BaseGoerli, ModeTestnet],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),

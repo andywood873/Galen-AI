@@ -65,6 +65,8 @@ contract Item is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
     // maps to lock / unlock states
     mapping(uint256 => bool) public lockable;
 
+    uint256 private nextTokenId = 1;
+
     event Authorised(uint256 indexed tokenId, address owner);
 
     event Sold(uint256 tokenId, address tokenAddress, uint256 amount);
@@ -181,15 +183,16 @@ contract Item is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
 
     /// @notice mint tokens
     /// @param _to recipient to be received
-    /// @param _tokenId token ID
     /// @param _value amount of the token to be minted
     /// @param _data aux data
     function mint(
         address _to,
-        uint256 _tokenId,
         uint256 _value,
         bytes memory _data
     ) external nonReentrant whenNotPaused {
+        uint256 _tokenId = nextTokenId;
+        nextTokenId += 1;
+
         require(
             tokens[_tokenId].maxSupply >=
                 (tokens[_tokenId].currentSupply + _value),
@@ -241,10 +244,12 @@ contract Item is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
     /// @notice mint tokens with ETH
     function mintWithEth(
         address _to,
-        uint256 _tokenId,
         uint256 _value,
         bytes memory _data
     ) external payable nonReentrant whenNotPaused {
+        uint256 _tokenId = nextTokenId;
+        nextTokenId += 1;
+
         require(tokenOwners[_tokenId] != _msgSender(), "Owner is not allowed");
         require(
             tokens[_tokenId].price.tokenType == TokenType.ETHER,
@@ -284,8 +289,7 @@ contract Item is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
         );
     }
 
-    // Function to mint a secondary NFT Prompt derived from the original NFT
-    function mintDerivativeNFT(
+    function createDerivativeNFT(
         uint256 _originalTokenId,
         string memory _tokenURI,
         uint256 _initialAmount,
@@ -301,8 +305,8 @@ contract Item is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
         );
 
         // Create a new derivative NFT
-        tokenOwnerCount += 1;
-        uint256 derivativeTokenId = tokenOwnerCount;
+        uint256 derivativeTokenId = nextTokenId;
+        nextTokenId += 1;
         tokenOwners[derivativeTokenId] = _msgSender();
 
         // Mint the derivative NFT
