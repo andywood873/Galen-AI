@@ -1,22 +1,21 @@
-const hre = require("hardhat");
+const hre = require('hardhat');
 
 async function main() {
   const [deployer] = await hre.ethers.getSigners();
 
-  console.log(
-    "Deploying contracts with the account:",
-    deployer.address
-  );
-  
-  console.log("Account balance:", (await deployer.getBalance()).toString());
+  console.log('Deploying contracts with the account:', deployer.address);
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy();
+  console.log('Account balance:', (await deployer.getBalance()).toString());
 
-  await lock.deployed();
+  const Contract = await hre.ethers.getContractFactory('AvalonV2');
+  const contract = await Contract.deploy();
 
-  console.log("Lock contract deployed to:", lock.address);
+  await contract.deployed();
+
+  console.log('AvalonV2 contract deployed to:', contract.address);
 }
+
+// AvalonV2 contract deployed to: 0x7E7006b18873bcddc2158Ea50dC862737ad87d87
 
 main()
   .then(() => process.exit(0))

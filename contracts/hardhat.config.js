@@ -6,7 +6,7 @@ require('@openzeppelin/hardhat-upgrades');
 
 const dotenv = require('dotenv').config();
 const privateKey =
-  '925c4698cb8308b800db1c3d476c20ffcf8cf65dd2113a668cec48fcbd00f0ec';
+  '0xd5e7d2bbc7cc960d1c27708e7f4183c2c2bee24b39be4bb80d0177169602c044';
 
 task('accounts', 'Prints The List Of Accounts', async (taskArgs, hre) => {
   const accounts = await hre.ethers.getSigners();
@@ -28,7 +28,14 @@ module.exports = {
     zoraGoerli: {
       url: 'https://testnet.rpc.zora.energy/',
       accounts: [privateKey],
-      chainId: 80001,
+      chainId: 999,
+      gasPrice: 8000000000, // 8 Gwei
+    },
+    modeTestnet: {
+      url: 'https://sepolia.mode.network/',
+      accounts: [privateKey],
+      chainId: 919,
+      gasPrice: 8000000000, // 8 Gwei
     },
   },
   solidity: {

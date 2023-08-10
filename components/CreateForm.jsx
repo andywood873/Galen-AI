@@ -4,32 +4,76 @@ import { FormContext } from '@/context/formContext';
 import Switch from './Switch';
 import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
+import { ethers } from 'ethers';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmationModal from './modal/ConfirmationModal';
+import AvalonV2 from '@/contracts/AvalonV2.json';
+import { config } from '@/abi';
 
 const CreateForm = () => {
   const { base64Image } = useContext(FormContext);
   const [openModal, setOpenModal] = useState(false);
-  const [network, setNetwork] = useState('devnet');
   const [promptNftName, setPromptNftName] = useState('');
-  const [promptNftSymbol, setPromptNftSymbol] = useState('');
   const [promptNftDescription, setPromptNftDescription] = useState('');
   const [attr, setAttr] = useState(
-    JSON.stringify([{ trait_type: 'model', value: 'Stable Diffusion' }])
+    JSON.stringify([
+      { trait_type: 'model', value: 'Stable Diffusion' },
+      { trait_type: 'prompts', value: '' },
+    ])
   );
   const [extUrl, setExtUrl] = useState('https://www.avalon.ai');
   const [prompt, setPrompt] = useState('');
   const [createKey, setCreateKey] = useState('');
   const [maxSupply, setMaxSupply] = useState(0);
-  const [royalty, setRoyalty] = useState(99);
+
   const [file, setFile] = useState(null);
-  const [status, setStatus] = useState('Awaiting Upload');
   const [minted, setMinted] = useState();
   const [saveMinted, setSaveMinted] = useState();
   const [receipt, setReceipt] = useState('');
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const apiKeys = process.env.NEXT_PUBLIC_NFTSTORAGE_TOKEN;
+
+  const createPromptNft = async (e) => {
+    e.preventDefault();
+
+    let base64String = base64Image;
+
+    let imageType = 'image/jpeg';
+
+    // We convert the base64 string to a blob
+    let blob = base64ToBlob(base64String, contentType);
+
+    let parsedAttr = JSON.parse(attr);
+    parsedAttr[1].value = prompt;
+
+    try {
+      const client = new NFTStorage({ token: apiKeys });
+      const imageFile = new File([blob], promptNftName, {
+        type: imageType,
+      });
+      const metadata = await client.store({
+        name: promptNftName,
+        description: promptNftDescription,
+        image: imageFile,
+        attributes: parsedAttr,
+      });
+
+      console.log(metadata);
+
+      const nftPromptFactory = new ethers.Contract(
+        config.avalonV2,
+        AvalonV2,
+        signer
+      );
+
+      const createPromptNft = await nftPromptFactory.authorise(metadata);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -96,7 +140,7 @@ const CreateForm = () => {
               onChange={(e) => setPrompt(e.target.value)}
             />
             <label
-              for="floating_repeat"
+              htmlFor="floating_repeat"
               className="peer-focus:font-medium absolute text-sm text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-purple-600 peer-focus:dark:text-purple-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6"
             >
               Prompt

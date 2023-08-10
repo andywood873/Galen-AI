@@ -15,7 +15,7 @@ import "./lib/NFT1155URIStorage.sol";
  * @title Hybrid Permission-based NFTs represent any creative works
  */
 
-contract Item is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
+contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
     using Address for address;
     using SafeERC20 for IERC20;
 
