@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
 import React from 'react';
-import Technologies from './Technologies';
+import Technologies from '../Technologies';
 
 const Hero = () => {
   return (

@@ -37,6 +37,12 @@ module.exports = {
       chainId: 919,
       gasPrice: 8000000000, // 8 Gwei
     },
+    mumbai: {
+      url: 'https://rpc-mumbai.maticvigil.com',
+      accounts: [privateKey],
+      chainId: 80001,
+      gasPrice: 8000000000, // 8 Gwei
+    }
   },
   solidity: {
     version: '0.8.10',

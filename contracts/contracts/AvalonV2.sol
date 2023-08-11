@@ -19,6 +19,9 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
     using Address for address;
     using SafeERC20 for IERC20;
 
+    string private _name;
+    string private _symbol;
+
     enum Role {
         UNAUTHORIZED,
         ADMIN
@@ -77,7 +80,9 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
         uint256 derivativeTokenId
     );
 
-    constructor() {
+    constructor(string memory name_, string memory symbol_) {
+        _name = "AvalonV2";
+        _symbol = "AVL";
         devAddress = msg.sender;
         permissions[msg.sender] = Role.ADMIN;
         // Set royalty fee

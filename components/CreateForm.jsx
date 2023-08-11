@@ -1,5 +1,6 @@
 /* eslint-disable @next/next/no-img-element */
 import { useContext, useState, useEffect } from 'react';
+import { NFTStorage, File } from 'nft.storage';
 import { FormContext } from '@/context/formContext';
 import Switch from './Switch';
 import axios from 'axios';
@@ -7,7 +8,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import { ethers } from 'ethers';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmationModal from './modal/ConfirmationModal';
-import AvalonV2 from '@/contracts/AvalonV2.json';
+import AvalonV2 from '@/abi/AvalonV2.json';
 import { config } from '@/abi';
 
 const CreateForm = () => {
@@ -24,7 +25,9 @@ const CreateForm = () => {
   const [extUrl, setExtUrl] = useState('https://www.avalon.ai');
   const [prompt, setPrompt] = useState('');
   const [createKey, setCreateKey] = useState('');
-  const [maxSupply, setMaxSupply] = useState(0);
+  const [maxSupply, setMaxSupply] = useState(100);
+  const [initialAmount, setInitialAmount] = useState(100);
+  const [price, setNftPrice] = useState();
 
   const [file, setFile] = useState(null);
   const [minted, setMinted] = useState();
@@ -37,7 +40,7 @@ const CreateForm = () => {
 
   const apiKeys = process.env.NEXT_PUBLIC_NFTSTORAGE_TOKEN;
 
-  const createPromptNft = async (e) => {
+  const CreateNFT = async (e) => {
     e.preventDefault();
 
     let base64String = base64Image;
@@ -45,24 +48,30 @@ const CreateForm = () => {
     let imageType = 'image/jpeg';
 
     // We convert the base64 string to a blob
-    let blob = base64ToBlob(base64String, contentType);
+    let blob = base64ToBlob(base64String, imageType);
 
     let parsedAttr = JSON.parse(attr);
     parsedAttr[1].value = prompt;
 
     try {
       const client = new NFTStorage({ token: apiKeys });
-      const imageFile = new File([blob], promptNftName, {
+      const imageFile = new File([blob], 'image.jpg', {
         type: imageType,
       });
+
       const metadata = await client.store({
-        name: promptNftName,
+        name: 'Fututistic',
         description: promptNftDescription,
         image: imageFile,
         attributes: parsedAttr,
       });
 
-      console.log(metadata);
+      console.log(metadata.url);
+
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+
+      const tokenUri = 'ipfs://' + metadata + '/metadata.json';
 
       const nftPromptFactory = new ethers.Contract(
         config.avalonV2,
@@ -70,11 +79,46 @@ const CreateForm = () => {
         signer
       );
 
-      const createPromptNft = await nftPromptFactory.authorise(metadata);
+      const createPromptNft = await nftPromptFactory.authorise(
+        metadata.url,
+        ethers.BigNumber.from(10),
+        ethers.BigNumber.from(1),
+        '0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001',
+        ethers.utils.parseEther('0.04'),
+        ethers.BigNumber.from(200)
+      );
+
+      const receipt = await createPromptNft.wait();
+      console.log('createPromptNft: ', await createPromptNft.hash);
+      console.log('receipt: ', receipt);
+
+      // Show success message to the user
+      toast.success('NFT created successfully!');
     } catch (error) {
       console.log(error);
     }
   };
+
+  function base64ToBlob(base64Data, contentType = '', sliceSize = 512) {
+    const byteCharacters = atob(base64Data);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      const slice = byteCharacters.slice(offset, offset + sliceSize);
+      const byteNumbers = new Array(slice.length);
+
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    const blob = new Blob(byteArrays, { type: contentType });
+
+    return blob;
+  }
 
   return (
     <>
@@ -168,7 +212,7 @@ const CreateForm = () => {
           <button
             type="submit"
             className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800"
-            onClick={createPromptNft}
+            onClick={CreateNFT}
           >
             Create
           </button>

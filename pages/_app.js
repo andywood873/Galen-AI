@@ -89,8 +89,33 @@ const ModeTestnet = {
   testnet: true,
 };
 
+const PolygonMumbai = {
+  id: 80001,
+  name: 'Polygon Mumbai',
+  network: 'polygon-mumbai',
+  iconUrl: 'https://polygon.technology/assets/images/logo.png',
+  iconBackground: '#fff',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Matic',
+    symbol: 'MATIC',
+  },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc-mumbai.maticvigil.com/'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'Polygon Mumbai Explorer',
+      url: 'https://mumbai.polygonscan.com/',
+    },
+  },
+  testnet: true,
+};
+
 const { provider, chains } = configureChains(
-  [ZoraGoerli, BaseGoerli, ModeTestnet],
+  [ZoraGoerli, BaseGoerli, ModeTestnet, PolygonMumbai],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
@@ -101,6 +126,7 @@ const { provider, chains } = configureChains(
 const { connectors } = getDefaultWallets({
   appName: 'Avalon',
   chains,
+  additionalChains: [PolygonMumbai],
 });
 
 const wagmiClient = createClient({
