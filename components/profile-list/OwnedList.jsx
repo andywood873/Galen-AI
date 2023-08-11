@@ -42,7 +42,7 @@ const OwnedList = () => {
                 (attr) => attr.trait_type === 'model'
               )?.value || 'Unknown'
             }
-            owner={token.token_instance.owner || 'Unknown'}
+            owner={address || 'Unknown'}
             nftAddress={token.token.address || 'Unknown'}
           />
         ))}
