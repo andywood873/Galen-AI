@@ -1,6 +1,6 @@
 const config = {
   avalonV2: '0x1D48Ad40dBC52Ae5B4eE35012dFA00Ba4160e239',
-  avalonPromptMarketplace: '0x79019cF636CF0901CB772c58F8F62b7D7F7cff9D',
+  avalonPromptMarketplace: '0xd29a4EC8E2f328Fd7D13Ce59F77c0930a4E0B561',
 };
 
 module.exports = { config };

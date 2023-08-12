@@ -11,7 +11,7 @@ contract AvalonPromptMarketplace is ERC1155Holder {
     struct Listing {
         address seller;
         uint256 tokenId;
-        uint256 price;
+        uint256 price; // Added price to the struct
         uint256 quantity;
         bool active;
     }
@@ -57,7 +57,7 @@ contract AvalonPromptMarketplace is ERC1155Holder {
         listings[tokenIdCounter] = Listing({
             seller: msg.sender,
             tokenId: tokenId,
-            price: price,
+            price: price, 
             quantity: quantity,
             active: true
         });
@@ -137,6 +137,26 @@ contract AvalonPromptMarketplace is ERC1155Holder {
         return listedTokens;
     }
 
+    function getUserListedTokens(
+        address user
+    ) external view returns (Listing[] memory) {
+        uint256[] memory userTokens = userNFTs[user];
+        Listing[] memory listedTokens = new Listing[](userTokens.length);
+
+        for (uint256 i = 0; i < userTokens.length; i++) {
+            uint256 tokenId = userTokens[i];
+            listedTokens[i] = listings[tokenId];
+        }
+
+        return listedTokens;
+    }
+
+    function getNumberOfUserListedTokens(
+        address user
+    ) external view returns (uint256) {
+        return userNFTs[user].length;
+    }
+
     function getNumberOfListedTokens() public view returns (uint256) {
         uint256 count = 0;
 
@@ -147,11 +167,5 @@ contract AvalonPromptMarketplace is ERC1155Holder {
         }
 
         return count;
-    }
-
-    function getUserNFTs(
-        address user
-    ) external view returns (uint256[] memory) {
-        return userNFTs[user];
     }
 }
