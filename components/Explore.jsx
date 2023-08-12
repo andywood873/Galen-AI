@@ -3,8 +3,30 @@ import PromptCard from './cards/PromptCard';
 import ExploreTab from './tab/ExploreTab';
 import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
+import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
+import { ethers } from 'ethers';
+import { config } from '@/abi';
 
 const Explore = () => {
+  const getAllNFTs = async (tld) => {
+    const provider = new ethers.providers.JsonRpcProvider(
+      'https://sepolia.mode.network/'
+    );
+
+    const nftGetterContract = new ethers.Contract(
+      config.avalonPromptMarketplace,
+      AvalonPromptMarketplace,
+      provider
+    );
+
+    const listedNFTs = await nftGetterContract.getListedTokens();
+    console.log(listedNFTs);
+  };
+
+  useEffect(() => {
+    getAllNFTs();
+  }, []);
+
   return (
     <>
       <h1 className="text-center text-xl text-white mt-6 gradient-text">

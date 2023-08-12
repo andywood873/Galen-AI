@@ -121,15 +121,15 @@ contract AvalonPromptMarketplace is ERC1155Holder {
         emit SaleCompleted(msg.sender, tokenId, price, quantity);
     }
 
-    function getListedTokens() external view returns (uint256[] memory) {
-        uint256[] memory listedTokens = new uint256[](
+    function getListedTokens() external view returns (Listing[] memory) {
+        Listing[] memory listedTokens = new Listing[](
             getNumberOfListedTokens()
         );
         uint256 index = 0;
 
         for (uint256 i = 0; i < tokenIdCounter; i++) {
             if (listings[i].active) {
-                listedTokens[index] = listings[i].tokenId;
+                listedTokens[index] = listings[i];
                 index++;
             }
         }
