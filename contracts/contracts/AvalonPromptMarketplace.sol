@@ -18,6 +18,7 @@ contract AvalonPromptMarketplace is ERC1155Holder {
 
     mapping(uint256 => Listing) public listings;
     mapping(address => uint256[]) public userNFTs;
+    mapping(uint256 => uint256) public tokenToListingId;
 
     address public tokenContract; // Address of the ERC1155 token contract
     uint256 public tokenIdCounter;
@@ -57,10 +58,12 @@ contract AvalonPromptMarketplace is ERC1155Holder {
         listings[tokenIdCounter] = Listing({
             seller: msg.sender,
             tokenId: tokenId,
-            price: price, 
+            price: price,
             quantity: quantity,
             active: true
         });
+
+        tokenToListingId[tokenId] = tokenIdCounter;
 
         userNFTs[msg.sender].push(tokenIdCounter);
 
@@ -149,6 +152,12 @@ contract AvalonPromptMarketplace is ERC1155Holder {
         }
 
         return listedTokens;
+    }
+
+    function getListingIdForToken(
+        uint256 tokenId
+    ) external view returns (uint256) {
+        return tokenToListingId[tokenId];
     }
 
     function getNumberOfUserListedTokens(

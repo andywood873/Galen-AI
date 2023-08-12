@@ -1,22 +1,15 @@
-const hre = require('hardhat');
+// deploy.js
+const { ethers } = require("hardhat");
 
-// We recommend this setting for Hardhat's task and script system,
-// but it's not necessary.
 async function main() {
-  // We get the contract to deploy
-  const AvalonV2 = await hre.ethers.getContractFactory('AvalonV2');
+  // Deploy AvalonV3 contract
+  const AvalonV3 = await ethers.getContractFactory("AvalonV3");
+  const avalonV3 = await AvalonV3.deploy("Avalon", "AVL");
+  await avalonV3.deployed();
 
-  const avalon = await AvalonV2.deploy('AvalonV2', 'AVL');
-
-  // We wait for our contract to be mined.
-  await avalon.deployed();
-
-  console.log('Avalon deployed to:', avalon.address);
+  console.log("AvalonV3 deployed to:", avalonV3.address);
 }
 
-// Avalon deployed to: 0x8aDF529f6A7912e25EAf131089c050e2D8b62847
-
-// We recommend this for testing and debugging.
 main()
   .then(() => process.exit(0))
   .catch((error) => {

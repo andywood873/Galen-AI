@@ -52,6 +52,8 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
         uint256 maxSupply; // can't be changed
     }
 
+    // maps to the creator of each token ID
+    mapping(uint256 => address) public tokenCreators;
     // maps to the owner of each token ID
     mapping(uint256 => address) public tokenOwners;
     // Mapping to keep track of the derivative NFTs
@@ -130,6 +132,9 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
             "Max Supply should be greater then Initial Amount"
         );
         tokenOwnerCount += 1;
+        address creator = _msgSender(); // Creator's address
+        tokenOwners[tokenOwnerCount] = creator; // Set the creator as the initial owner
+        tokenCreators[tokenOwnerCount] = creator; // Record the creator's address
         tokenOwners[tokenOwnerCount] = _msgSender();
 
         // first mint
@@ -147,7 +152,7 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
         tokens[tokenOwnerCount].maxSupply = _maxSupply;
         tokens[tokenOwnerCount].currentSupply = _initialAmount;
 
-        emit Authorised(tokenOwnerCount, _msgSender());
+        emit Authorised(tokenOwnerCount, creator); // Emit the event with the creator's address
     }
 
     /// @notice set the token URI (only be called by the token owner)
@@ -247,9 +252,9 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
     }
 
     /// @notice mint tokens with ETH
+    /// @notice mint tokens with ETH
     function mintWithEth(
         address _to,
-        uint256 _value,
         bytes memory _data
     ) external payable nonReentrant whenNotPaused {
         uint256 _tokenId = nextTokenId;
@@ -260,23 +265,21 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
             tokens[_tokenId].price.tokenType == TokenType.ETHER,
             "PriceAsset must be ETH"
         );
-        require(_value == 1, "One token only");
         require(
-            tokens[_tokenId].maxSupply >=
-                (tokens[_tokenId].currentSupply + _value),
+            tokens[_tokenId].maxSupply >= (tokens[_tokenId].currentSupply + 1),
             "Max Supply Exceeded"
         );
 
         // only one token is minted
         uint256 amount = msg.value;
         uint256 priceAmount = tokens[_tokenId].price.tokenIdOrAmount;
-        tokens[_tokenId].currentSupply += _value;
+        tokens[_tokenId].currentSupply += 1;
 
         require(amount == priceAmount, "Invalid amount");
 
         // taking royalty fees
         if (royaltyFee != 0) {
-            uint256 fee = (priceAmount * (royaltyFee)) / (10000);
+            uint256 fee = (priceAmount * royaltyFee) / 10000;
             (bool successRoyalty, ) = devAddress.call{value: fee}("");
             require(successRoyalty, "Failed to send Ether to Owner");
             priceAmount -= fee;
@@ -312,6 +315,9 @@ contract AvalonV2 is NFT1155, NFT1155URIStorage, ReentrancyGuard, Pausable {
         // Create a new derivative NFT
         uint256 derivativeTokenId = nextTokenId;
         nextTokenId += 1;
+        address creator = _msgSender(); // Creator's address
+        tokenOwners[derivativeTokenId] = creator; // Set the derivative creator as the owner
+        tokenCreators[derivativeTokenId] = creator; // Record the derivative creator's address
         tokenOwners[derivativeTokenId] = _msgSender();
 
         // Mint the derivative NFT

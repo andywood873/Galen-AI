@@ -53,7 +53,7 @@ const ListNftModal = ({
 
     const listPrompt = await listPromptContract.createListing(
       tokenId,
-      ethers.utils.parseEther('1'),
+      ethers.utils.parseEther('0.001'),
       ethers.BigNumber.from(quantity)
     );
 

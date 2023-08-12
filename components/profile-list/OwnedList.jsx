@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import OwnedCard from '../cards/OwnedCard';
 import { useAccount } from 'wagmi';
+import { config } from '@/abi';
 
 const OwnedList = () => {
   const [result, setResult] = useState([]);
@@ -27,7 +28,7 @@ const OwnedList = () => {
     fetchData();
   }, [address]);
 
-  const targetContractAddress = '0x1D48Ad40dBC52Ae5B4eE35012dFA00Ba4160e239';
+  const targetContractAddress = config.avalonV3;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-8">

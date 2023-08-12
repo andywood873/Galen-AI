@@ -4,11 +4,12 @@ import { NFTStorage, File } from 'nft.storage';
 import { FormContext } from '@/context/formContext';
 import Switch from './Switch';
 import axios from 'axios';
+import { useAccount } from 'wagmi';
 import { toast, ToastContainer } from 'react-toastify';
 import { ethers } from 'ethers';
 import 'react-toastify/dist/ReactToastify.css';
 import ConfirmationModal from './modal/ConfirmationModal';
-import AvalonV2 from '@/abi/AvalonV2.json';
+import AvalonV3 from '@/abi/AvalonV3.json';
 import { config } from '@/abi';
 
 const CreateForm = () => {
@@ -33,6 +34,8 @@ const CreateForm = () => {
   const [minted, setMinted] = useState();
   const [saveMinted, setSaveMinted] = useState();
   const [receipt, setReceipt] = useState('');
+
+  const { address, isConnected } = useAccount();
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -60,7 +63,7 @@ const CreateForm = () => {
       });
 
       const metadata = await client.store({
-        name: 'Fututistic',
+        name: 'Kratos',
         description: promptNftDescription,
         image: imageFile,
         attributes: parsedAttr,
@@ -73,19 +76,23 @@ const CreateForm = () => {
 
       const tokenUri = 'ipfs://' + metadata + '/metadata.json';
 
+      const royaltyFee = 10;
+
+      // Convert royalty fee to wei
+      const royaltyFeeWei = ethers.utils.parseUnits(royaltyFee.toString(), 2);
+
       const nftPromptFactory = new ethers.Contract(
-        config.avalonV2,
-        AvalonV2,
+        config.avalonV3,
+        AvalonV3,
         signer
       );
 
-      const createPromptNft = await nftPromptFactory.authorise(
+      
+
+      const createPromptNft = await nftPromptFactory.createNFT(
+        100,
         metadata.url,
-        ethers.BigNumber.from(10),
-        ethers.BigNumber.from(1),
-        '0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001',
-        ethers.utils.parseEther('0.04'),
-        ethers.BigNumber.from(200)
+        ethers.utils.parseEther('0.006')
       );
 
       const receipt = await createPromptNft.wait();

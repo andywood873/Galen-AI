@@ -11,30 +11,46 @@ import convertArrayToObject from '@/utils/convertToObject';
 const Explore = () => {
   const [listedNFTs, setListedNFTs] = useState([]);
 
-  const getAllNFTs = async (tld) => {
-    const provider = new ethers.providers.JsonRpcProvider(
-      'https://sepolia.mode.network/'
-    );
+  const API_URL = `https://sepolia.explorer.mode.network/api/v2/tokens/${config.avalonV3}/instances`;
 
-    const nftGetterContract = new ethers.Contract(
-      config.avalonPromptMarketplace,
-      AvalonPromptMarketplace,
-      provider
-    );
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL);
 
-    const listed = await nftGetterContract.getListedTokens();
-    const stringifiedListed = JSON.stringify(listed);
-    console.log(stringifiedListed);
-    if (stringifiedListed && stringifiedListed.length > 0) {
-      // Check if there's an actual response
-      const parsedListed = JSON.parse(stringifiedListed);
-      const convertedNFTs = convertArrayToObject(parsedListed);
-      setListedNFTs(convertedNFTs);
+      // Parse the response to retrieve the ERC1155 tokens
+      const tokens = response.data.items;
+
+      console.log(tokens);
+      setListedNFTs(tokens);
+    } catch (error) {
+      console.error('Error fetching data:', error);
     }
   };
 
+  // const getAllNFTs = async (tld) => {
+  //   const provider = new ethers.providers.JsonRpcProvider(
+  //     'https://sepolia.mode.network/'
+  //   );
+
+  //   const nftGetterContract = new ethers.Contract(
+  //     config.avalonPromptMarketplace,
+  //     AvalonPromptMarketplace,
+  //     provider
+  //   );
+
+  //   const listed = await nftGetterContract.getListedTokens();
+  //   const stringifiedListed = JSON.stringify(listed);
+  //   console.log(stringifiedListed);
+  //   if (stringifiedListed && stringifiedListed.length > 0) {
+  //     // Check if there's an actual response
+  //     const parsedListed = JSON.parse(stringifiedListed);
+  //     const convertedNFTs = convertArrayToObject(parsedListed);
+  //     setListedNFTs(convertedNFTs);
+  //   }
+  // };
+
   useEffect(() => {
-    getAllNFTs();
+    fetchData();
   }, []);
 
   return (
@@ -51,12 +67,19 @@ const Explore = () => {
           listedNFTs.map((nft, index) => (
             <PromptCard
               key={index}
-              tokenId={nft.tokenID} // Access the tokenId property
-              seller={nft.address} // Access the address property
-              price={nft.price} // Access the price property
+              img={nft.image_url}
+              tokenId={nft.id} // Access the tokenId property
+              seller={nft.token.address} // Access the address property
+              model={
+                nft.metadata.attributes.find(
+                  (attr) => attr.trait_type === 'model'
+                )?.value || 'Unknown'
+              }
+              // price={nft.price} // Access the price property
             />
           ))}
-      </div>S
+      </div>
+      S
     </>
   );
 };
