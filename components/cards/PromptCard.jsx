@@ -14,7 +14,7 @@ const getRandomWord = () => {
   return words[randomIndex];
 };
 
-const PromptCard = ({ tokenId, seller, price, model, img }) => {
+const PromptCard = ({ tokenId, seller, price, model, img, name }) => {
   const [ethPrice, setEthPrice] = useState();
   const { address, isConnected } = useAccount();
 
@@ -64,38 +64,16 @@ const PromptCard = ({ tokenId, seller, price, model, img }) => {
     getTokenPrice();
   }, []);
 
-  // const buyNFT = async (e) => {
-  //   const provider = new ethers.providers.Web3Provider(window.ethereum);
-  //   const signer = provider.getSigner();
-
-  //   const buyPromptContract = new ethers.Contract(
-  //     config.avalonPromptMarketplace,
-  //     AvalonPromptMarketplace,
-  //     signer
-  //   );
-
-  //   const getListingID = await buyPromptContract.getListingIdForToken(tokenId);
-
-  //   console.log(getListingID._hex);
-
-  //   const buyPrompt = await buyPromptContract.buyToken(getListingID._hex, 1, {
-  //     value: ethers.utils.parseEther('0.001'),
-  //     gasLimit: 400000,
-  //   });
-
-  //   const receipt = await buyPrompt.wait();
-  //   console.log('buyPrompt: ', await buyPrompt.hash);
-  //   console.log('receipt: ', receipt);
-  // };
-
   return (
     <div className="border-gradient relative mb-10 flex justify-center items-center rounded-lg">
       <div className="w-full p-2 h-full cursor-pointer overflow-hidden rounded-2xl flex flex-col items-center bg-black">
-        <img
-          src={img}
-          alt=""
-          className="w-[250px] h-[300px] object-cover rounded-[30px] transition-all duration-500 hover:opacity-90 pt-2"
-        />
+        <Link href="/details/[id]" as={`/details/${tokenId}`}>
+          <img
+            src={img}
+            alt=""
+            className="w-[250px] h-[300px] object-cover rounded-[30px] transition-all duration-500 hover:opacity-90 pt-2"
+          />
+        </Link>
 
         <div className="flex items-center justify-between gap-4 w-full">
           <div className="w-full">
@@ -112,7 +90,7 @@ const PromptCard = ({ tokenId, seller, price, model, img }) => {
             </span>
 
             <h3 className="mt-1 text-md text-center font-bold text-gray-300 w-full pt-2">
-              {/* {name} */}
+              {name}
             </h3>
             <div className="flex items-center justify-between mt-1 text-gray-300">
               <div className="flex items-center justify-center w-full">

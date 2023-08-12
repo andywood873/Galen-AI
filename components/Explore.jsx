@@ -75,6 +75,7 @@ const Explore = () => {
                   (attr) => attr.trait_type === 'model'
                 )?.value || 'Unknown'
               }
+              name={nft.metadata.name}
               // price={nft.price} // Access the price property
             />
           ))}
