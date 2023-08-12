@@ -3,7 +3,15 @@ import { useState } from 'react';
 import { formatAddress } from '@/utils/formatAddress';
 import ListNftModal from '../modal/ListNftModal';
 
-const OwnedCard = ({ img, name, model, owner, nftAddress }) => {
+const OwnedCard = ({
+  img,
+  name,
+  model,
+  owner,
+  nftAddress,
+  tokenId,
+  quantity,
+}) => {
   const [openModal, setOpenModal] = useState(false);
 
   const handleCloseModal = () => {
@@ -64,6 +72,8 @@ const OwnedCard = ({ img, name, model, owner, nftAddress }) => {
         handleOnClose={handleCloseModal}
         nftName={name}
         nftAddress={nftAddress}
+        tokenId={tokenId}
+        avalaibleQuantity={quantity}
       />
     </div>
   );

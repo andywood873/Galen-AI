@@ -6,19 +6,61 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import Link from 'next/link';
+import AvalonV2 from '@/abi/AvalonV2.json';
+import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
+import { config } from '@/abi';
+import { ethers } from 'ethers';
 
 const ListNftModal = ({
   openMintModal,
   handleOnClose,
   nftName,
   nftAddress,
+  tokenId,
+  avalaibleQuantity,
 }) => {
-  const [data, setData] = useState(null);
-  const [minted, setMinted] = useState();
-  const [saveMinted, setSaveMinted] = useState();
-  const [nftPrice, setNftPrice] = useState(0.001);
+  const [nftPrice, setNftPrice] = useState(1);
   const [network, setNetwork] = useState('zora');
+  const [quantity, setQuantity] = useState(1);
   const [hasListed, setHasListed] = useState(false);
+
+  const listNft = async (e) => {
+    e.preventDefault();
+
+    const provider = new ethers.providers.Web3Provider(window.ethereum);
+    const signer = provider.getSigner();
+
+    const avalonNftContract = new ethers.Contract(
+      config.avalonV2,
+      AvalonV2,
+      signer
+    );
+
+    // Approve the marketplace contract to manage the user's tokens
+    const approveTx = await avalonNftContract.setApprovalForAll(
+      config.avalonPromptMarketplace,
+      true
+    );
+    await approveTx.wait();
+    console.log('Marketplace approved');
+
+    // Create a contract instance for the marketplace
+    const listPromptContract = new ethers.Contract(
+      config.avalonPromptMarketplace,
+      AvalonPromptMarketplace,
+      signer
+    );
+
+    const listPrompt = await listPromptContract.createListing(
+      tokenId,
+      ethers.utils.parseEther('1'),
+      ethers.BigNumber.from(quantity)
+    );
+
+    const receipt = await listPrompt.wait();
+    console.log('listPrompt: ', await listPrompt.hash);
+    console.log('receipt: ', receipt);
+  };
 
   return (
     <>
@@ -78,6 +120,10 @@ const ListNftModal = ({
                         the Prompt Marketplace
                       </Dialog.Title>
 
+                      <h1 className="text-gray-300 font-bold">
+                        Avalaible Quantity: {avalaibleQuantity}
+                      </h1>
+
                       <div className="mt-4 flex gap-2 w-full text-center items-center justify-center">
                         <form className=" rounded max-w-sm mx-auto">
                           <label className="text-gray-300 align-start flex mb-2">
@@ -94,9 +140,24 @@ const ListNftModal = ({
                               setNftPrice(Number(e.target.value))
                             }
                           />
+                          <label className="text-gray-300 align-start flex my-2">
+                            Set List Quantity:
+                          </label>
+                          <input
+                            type="number"
+                            id="quantity"
+                            name="quantity"
+                            className="w-full px-3 py-2 text-sm leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+                            min="1"
+                            step="1"
+                            onChange={(e) =>
+                              setQuantity(Number(e.target.value))
+                            }
+                          />
                           <button
                             type="submit"
                             className="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 mt-6"
+                            onClick={listNft}
                           >
                             Continue
                           </button>

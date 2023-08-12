@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract NFTMarketplace is ERC1155Holder {
+contract AvalonPromptMarketplace is ERC1155Holder {
     using SafeMath for uint256;
 
     struct Listing {
@@ -17,8 +17,10 @@ contract NFTMarketplace is ERC1155Holder {
     }
 
     mapping(uint256 => Listing) public listings;
+    mapping(address => uint256[]) public userNFTs;
 
     address public tokenContract; // Address of the ERC1155 token contract
+    uint256 public tokenIdCounter;
 
     event ListingCreated(
         address indexed seller,
@@ -36,6 +38,7 @@ contract NFTMarketplace is ERC1155Holder {
 
     constructor(address _tokenContract) {
         tokenContract = _tokenContract;
+        tokenIdCounter = 0;
     }
 
     function createListing(
@@ -51,7 +54,7 @@ contract NFTMarketplace is ERC1155Holder {
             ""
         );
 
-        listings[tokenId] = Listing({
+        listings[tokenIdCounter] = Listing({
             seller: msg.sender,
             tokenId: tokenId,
             price: price,
@@ -59,7 +62,11 @@ contract NFTMarketplace is ERC1155Holder {
             active: true
         });
 
+        userNFTs[msg.sender].push(tokenIdCounter);
+
         emit ListingCreated(msg.sender, tokenId, price, quantity);
+
+        tokenIdCounter++;
     }
 
     function cancelListing(uint256 tokenId) external {
@@ -112,5 +119,39 @@ contract NFTMarketplace is ERC1155Holder {
         }
 
         emit SaleCompleted(msg.sender, tokenId, price, quantity);
+    }
+
+    function getListedTokens() external view returns (uint256[] memory) {
+        uint256[] memory listedTokens = new uint256[](
+            getNumberOfListedTokens()
+        );
+        uint256 index = 0;
+
+        for (uint256 i = 0; i < tokenIdCounter; i++) {
+            if (listings[i].active) {
+                listedTokens[index] = listings[i].tokenId;
+                index++;
+            }
+        }
+
+        return listedTokens;
+    }
+
+    function getNumberOfListedTokens() public view returns (uint256) {
+        uint256 count = 0;
+
+        for (uint256 i = 0; i < tokenIdCounter; i++) {
+            if (listings[i].active) {
+                count++;
+            }
+        }
+
+        return count;
+    }
+
+    function getUserNFTs(
+        address user
+    ) external view returns (uint256[] memory) {
+        return userNFTs[user];
     }
 }

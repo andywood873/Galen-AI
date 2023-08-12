@@ -44,6 +44,8 @@ const OwnedList = () => {
             }
             owner={address || 'Unknown'}
             nftAddress={token.token.address || 'Unknown'}
+            tokenId={token.token_id || 'Unknown'}
+            quantity={token.value || 'Unknown'}
           />
         ))}
     </div>
