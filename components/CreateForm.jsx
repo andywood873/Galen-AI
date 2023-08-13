@@ -11,12 +11,13 @@ import 'react-toastify/dist/ReactToastify.css';
 import ConfirmationModal from './modal/ConfirmationModal';
 import AvalonV3 from '@/abi/AvalonV3.json';
 import { config } from '@/abi';
+import SuccessModal from './modal/SuccessModal';
 
 const CreateForm = () => {
   const { address, isConnected } = useAccount();
   const { chain } = useNetwork();
   const { base64Image } = useContext(FormContext);
-  const [openModal, setOpenModal] = useState(false);
+  const [openModal, setOpenModal] = useState(true);
   const [promptNftName, setPromptNftName] = useState('');
   const [promptNftDescription, setPromptNftDescription] = useState('');
   const [attr, setAttr] = useState(
@@ -31,9 +32,8 @@ const CreateForm = () => {
   const [prompt, setPrompt] = useState('');
   const [maxSupply, setMaxSupply] = useState();
   const [price, setNftPrice] = useState();
-
-  const [file, setFile] = useState(null);
   const [receipt, setReceipt] = useState('');
+  const [txHash, setTxHash] = useState('');
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -59,6 +59,10 @@ const CreateForm = () => {
 
     parsedAttr[1].value = address;
     setAttr(JSON.stringify(parsedAttr));
+
+    const mintNotification = toast.loading(
+      'Please wait! Tokenizing your Prompt NFT'
+    );
 
     try {
       const client = new NFTStorage({ token: apiKeys });
@@ -102,7 +106,19 @@ const CreateForm = () => {
       console.log('receipt: ', receipt);
 
       // Show success message to the user
-      toast.success('NFT created successfully!');
+      toast.update(mintNotification, {
+        render: 'Creation Completed Successfully',
+        type: 'success',
+        isLoading: false,
+        autoClose: 7000,
+      });
+
+      setTxHash(createPromptNft.hash);
+      setOpenModal(true);
+      setPromptNftName('');
+      setPromptNftDescription('');
+      setMaxSupply('');
+      setNftPrice('');
     } catch (error) {
       console.log(error);
     }
@@ -236,10 +252,10 @@ const CreateForm = () => {
         </div>
       </div>
       <ToastContainer />
-      <ConfirmationModal
+      <SuccessModal
         openMintModal={openModal}
         handleOnClose={handleCloseModal}
-        txHash={receipt}
+        txHash={txHash}
       />
     </>
   );

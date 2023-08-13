@@ -13,6 +13,7 @@ import axios from 'axios';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import PromptDetails from './PromptDetails';
+import SuccessModal from './modal/SuccessModal';
 
 const nftAddress = config.avalonV3;
 
@@ -21,6 +22,11 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
   const [openModal, setOpenModal] = useState(false);
   const [maxSupply, setMaxSupply] = useState(0);
   const [ethPrice, setEthPrice] = useState();
+  const [txHash, setTxHash] = useState('');
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
 
   const getSupply = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
@@ -62,6 +68,8 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
 
+    const mintNotification = toast.loading('Please wait! Minting a Prompt NFT');
+
     const mintPromptContract = new ethers.Contract(
       config.avalonV3,
       AvalonV3,
@@ -77,6 +85,17 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
     console.log('mintPromptNFT: ', await mintPromptNFT.hash);
 
     console.log('receipt: ', receipt);
+
+    // Show success message to the user
+    toast.update(mintNotification, {
+      render: 'Successfully Bought NFT Prompt',
+      type: 'success',
+      isLoading: false,
+      autoClose: 7000,
+    });
+
+    setTxHash(mintPromptNFT.hash);
+    setOpenModal(true);
   };
 
   useEffect(() => {
@@ -206,12 +225,12 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
         </div>
       </div>
       <PromptDetails tokenId={tokenId} attributes={attributes} />
-      {/* <TransferModal
-        openMintModal={openModal}
-        handleOnClose={handleOnClose}
-        nftAddress={nftAddress}
-      />  */}
       <ToastContainer />
+      <SuccessModal
+        openMintModal={openModal}
+        handleOnClose={handleCloseModal}
+        txHash={txHash}
+      />
     </>
   );
 };

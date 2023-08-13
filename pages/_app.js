@@ -37,32 +37,6 @@ const ZoraGoerli = {
   testnet: true,
 };
 
-const BaseGoerli = {
-  id: 84531,
-  name: 'Base Goerli',
-  network: 'base-goerli',
-  iconUrl:
-    'https://altcoinsbox.com/wp-content/uploads/2023/02/base-logo-in-blue.png',
-  iconBackground: '#fff',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Base Goerli Ether',
-    symbol: 'ETH',
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://goerli.base.org/'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'BaseScan',
-      url: 'https://goerli.basescan.org/',
-    },
-  },
-  testnet: true,
-};
-
 const ModeTestnet = {
   id: 919,
   name: 'Mode Testnet',
@@ -89,33 +63,8 @@ const ModeTestnet = {
   testnet: true,
 };
 
-const PolygonMumbai = {
-  id: 80001,
-  name: 'Polygon Mumbai',
-  network: 'polygon-mumbai',
-  iconUrl: 'https://polygon.technology/assets/images/logo.png',
-  iconBackground: '#fff',
-  nativeCurrency: {
-    decimals: 18,
-    name: 'Matic',
-    symbol: 'MATIC',
-  },
-  rpcUrls: {
-    default: {
-      http: ['https://rpc-mumbai.maticvigil.com/'],
-    },
-  },
-  blockExplorers: {
-    default: {
-      name: 'Polygon Mumbai Explorer',
-      url: 'https://mumbai.polygonscan.com/',
-    },
-  },
-  testnet: true,
-};
-
 const { provider, chains } = configureChains(
-  [ZoraGoerli, BaseGoerli, ModeTestnet, PolygonMumbai],
+  [ZoraGoerli, ModeTestnet],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
@@ -126,7 +75,6 @@ const { provider, chains } = configureChains(
 const { connectors } = getDefaultWallets({
   appName: 'Avalon',
   chains,
-  additionalChains: [PolygonMumbai],
 });
 
 const wagmiClient = createClient({
