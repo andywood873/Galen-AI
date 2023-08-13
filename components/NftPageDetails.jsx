@@ -172,10 +172,10 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
             </div>
             <div className="glassmorphism p-4 text-start w-[210px]">
               <h1 className="font-bold">Chain:</h1>
-              <p>Mode</p>
+              <p> {attributes && attributes[2] ? attributes[2].value : ''}</p>
             </div>
             <div className="bg-black/60 border shadow-2xl border-gray-400 p-4 text-start w-[210px]">
-              <h1 className="font-bold">Max Supply:</h1>
+              <h1 className="font-bold">Current Supply:</h1>
               {maxSupply && <p>{maxSupply}</p>}
             </div>
           </div>

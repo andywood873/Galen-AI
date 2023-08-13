@@ -4,7 +4,7 @@ import { NFTStorage, File } from 'nft.storage';
 import { FormContext } from '@/context/formContext';
 import Switch from './Switch';
 import axios from 'axios';
-import { useAccount } from 'wagmi';
+import { useAccount, useNetwork } from 'wagmi';
 import { toast, ToastContainer } from 'react-toastify';
 import { ethers } from 'ethers';
 import 'react-toastify/dist/ReactToastify.css';
@@ -14,6 +14,7 @@ import { config } from '@/abi';
 
 const CreateForm2 = () => {
   const { address, isConnected } = useAccount();
+  const { chain } = useNetwork();
   const { base64Image } = useContext(FormContext);
   const [openModal, setOpenModal] = useState(false);
   const [promptNftName, setPromptNftName] = useState('');
@@ -21,8 +22,8 @@ const CreateForm2 = () => {
   const [attr, setAttr] = useState(
     JSON.stringify([
       { trait_type: 'model', value: 'Stable Diffusion' },
-      { trait_type: 'creator', value: address },
-      { trait_type: 'chain', value: 'Mode' },
+      { trait_type: 'creator', value: '' },
+      { trait_type: 'chain', value: '' },
       { trait_type: 'prompts', value: '' },
     ])
   );
@@ -62,6 +63,12 @@ const CreateForm2 = () => {
     let parsedAttr = JSON.parse(attr);
     parsedAttr[3].value = prompt;
 
+    parsedAttr[2].value = chain.name;
+    setAttr(JSON.stringify(parsedAttr));
+
+    parsedAttr[1].value = address;
+    setAttr(JSON.stringify(parsedAttr));
+
     try {
       const client = new NFTStorage({ token: apiKeys });
       const imageFile = new File([image], 'image.jpg', {
@@ -96,7 +103,7 @@ const CreateForm2 = () => {
       const createPromptNft = await nftPromptFactory.createNFT(
         maxSupply,
         metadata.url,
-        ethers.utils.parseEther('0.006')
+        ethers.utils.parseEther(price)
       );
 
       const receipt = await createPromptNft.wait();

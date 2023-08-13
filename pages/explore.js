@@ -7,8 +7,8 @@ const explore = () => {
     <div>
       <div className="bg-[url('/bg-stars.png')] bg-repeat-y bg-center relative">
         <Nav2 />
+        <Explore />
       </div>
-      <Explore />
     </div>
   );
 };

@@ -69,13 +69,18 @@ const Explore = () => {
               key={index}
               img={nft.image_url}
               tokenId={nft.id} // Access the tokenId property
-              seller={nft.token.address} // Access the address property
+              seller={
+                nft.metadata.attributes.find(
+                  (attr) => attr.trait_type === 'creator'
+                )?.value || 'Unknown'
+              } // Access the address property
               model={
                 nft.metadata.attributes.find(
                   (attr) => attr.trait_type === 'model'
                 )?.value || 'Unknown'
               }
               name={nft.metadata.name}
+              chainAddress={nft.token.address}
               // price={nft.price} // Access the price property
             />
           ))}

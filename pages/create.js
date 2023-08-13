@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import Nav2 from '@/components/layout/Nav2';
-import CreateForm from '@/components/CreateForm';
+import CreateImageForm from '@/components/CreateImageForm';
 import { useContext } from 'react';
 import { FormContext } from '@/context/formContext';
 
@@ -12,7 +12,7 @@ const Create = () => {
       <div className="bg-[url('/bg-stars.png')] bg-repeat-x bg-center relative">
         <Nav2 />
       </div>
-      <CreateForm />
+      <CreateImageForm />
     </div>
   );
 };

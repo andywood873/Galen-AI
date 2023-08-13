@@ -8,17 +8,42 @@ import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
 import { config } from '@/abi';
 import { useAccount, useBalance } from 'wagmi';
 
+const modeAddress = config.avalonV3;
+const zoraAddress = config.avalonV2;
+
 const getRandomWord = () => {
   const words = ['Rare', 'Common'];
   const randomIndex = Math.floor(Math.random() * words.length);
   return words[randomIndex];
 };
 
-const PromptCard = ({ tokenId, seller, price, model, img, name }) => {
+const getChainImage = (chainAddress) => {
+  if (chainAddress === modeAddress) {
+    return 'https://png.pngtree.com/thumb_back/fh260/background/20210707/pngtree-golden-yellow-gradient-abstract-art-background-image_736275.jpg';
+  } else if (chainAddress === zoraAddress) {
+    return 'zora.png';
+  } else {
+    return '3.jpg';
+  }
+};
+
+const PromptCard = ({
+  tokenId,
+  seller,
+  price,
+  model,
+  img,
+  name,
+  chainAddress,
+}) => {
   const [ethPrice, setEthPrice] = useState();
   const { address, isConnected } = useAccount();
 
-  console.log(tokenId);
+  // console.log(chain);
+
+  const chainImg = getChainImage(chainAddress);
+
+  // console.log(tokenId);
 
   const getTokenPrice = async (e) => {
     const provider = new ethers.providers.JsonRpcProvider(
@@ -32,7 +57,7 @@ const PromptCard = ({ tokenId, seller, price, model, img, name }) => {
     );
 
     const getTokenPrice = await priceGetterContract.getPrice(tokenId);
-    console.log(getTokenPrice._hex);
+    // console.log(getTokenPrice._hex);
     const bigNumber = ethers.BigNumber.from(getTokenPrice._hex);
     const ethValue = ethers.utils.formatEther(bigNumber);
     setEthPrice(ethValue);
@@ -79,9 +104,9 @@ const PromptCard = ({ tokenId, seller, price, model, img, name }) => {
           <div className="w-full">
             <div>
               <img
-                // src={chainImg}
+                src={chainImg}
                 alt=""
-                className="w-[34px] p-1 absolute top-4 right-7 bg-purple-800 rounded-2xl"
+                className="w-[34px] h-[35px] p-1 absolute top-4 right-7 bg-purple-800 rounded-2xl"
               />
             </div>
 
