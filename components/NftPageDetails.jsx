@@ -16,17 +16,7 @@ import PromptDetails from './PromptDetails';
 
 const nftAddress = config.avalonV3;
 
-const NftPageDetails = ({
-  price,
-  date,
-  image,
-  name,
-  description,
-  attributes,
-  creator,
-  owner,
-  tokenId,
-}) => {
+const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
   //   const solPrice = useSolPrice();
   const [openModal, setOpenModal] = useState(false);
   const [maxSupply, setMaxSupply] = useState(0);
@@ -44,7 +34,6 @@ const NftPageDetails = ({
     );
 
     const getTokenSupply = await supplyGetterContract.getMaxSupply(tokenId);
-    console.log(getTokenSupply);
     const bigNumber = ethers.BigNumber.from(getTokenSupply._hex);
     const supplyValue = bigNumber.toNumber();
     setMaxSupply(supplyValue);
@@ -112,7 +101,7 @@ const NftPageDetails = ({
 
   const prompt = (attributes && attributes[1] && attributes[1].value) || null;
 
-  console.log(attributes);
+  // console.log(attributes);
 
   const mintNft = async (e) => {
     e.preventDefault();
@@ -131,7 +120,9 @@ const NftPageDetails = ({
           <div className="flex flex-col justify-center ml-[100px] mt-6 text-gray-300">
             <div className="flex justify-center gap-4 border-b-2 border-gray-500">
               <h1>Creator Address:</h1>
-              {/* <p>{owner && formatAddress(owner)}</p> */}
+              {attributes && attributes[1]
+                ? formatAddress(attributes[1].value)
+                : ''}
             </div>
 
             <div className="flex justify-center gap-4 mt-3 border-b-2 border-gray-500">
@@ -160,9 +151,7 @@ const NftPageDetails = ({
               <span className="text-sm"> 12</span>
             </p>
             <h4 className="w-[700px] text-gray-400 italic">
-              Lorem ipsum dolor sit amet consectetur, adipisicing elit. Facilis,
-              similique ullam! Harum doloremque, sequi impedit ipsum voluptate
-              numquam quisquam autem dolor.
+              {description && <p>{description}</p>}
             </h4>
           </div>
 
@@ -216,7 +205,7 @@ const NftPageDetails = ({
           </div>
         </div>
       </div>
-      <PromptDetails />
+      <PromptDetails tokenId={tokenId} attributes={attributes} />
       {/* <TransferModal
         openMintModal={openModal}
         handleOnClose={handleOnClose}

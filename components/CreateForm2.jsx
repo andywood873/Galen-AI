@@ -12,7 +12,7 @@ import ConfirmationModal from './modal/ConfirmationModal';
 import AvalonV3 from '@/abi/AvalonV3.json';
 import { config } from '@/abi';
 
-const CreateForm = () => {
+const CreateForm2 = () => {
   const { address, isConnected } = useAccount();
   const { base64Image } = useContext(FormContext);
   const [openModal, setOpenModal] = useState(false);
@@ -22,6 +22,7 @@ const CreateForm = () => {
     JSON.stringify([
       { trait_type: 'model', value: 'Stable Diffusion' },
       { trait_type: 'creator', value: address },
+      { trait_type: 'chain', value: 'Mode' },
       { trait_type: 'prompts', value: '' },
     ])
   );
@@ -32,6 +33,15 @@ const CreateForm = () => {
 
   const [file, setFile] = useState(null);
   const [receipt, setReceipt] = useState('');
+  const [imageTitle, setImageTitle] = useState('');
+  const [imageType, setImageType] = useState('');
+  const [image, setImage] = useState('');
+
+  const handleImage = (e) => {
+    setImage(e.target.files[0]);
+    setImageTitle(e.target.files[0].name);
+    setImageType(e.target.files[0].type);
+  };
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -50,11 +60,11 @@ const CreateForm = () => {
     let blob = base64ToBlob(base64String, imageType);
 
     let parsedAttr = JSON.parse(attr);
-    parsedAttr[1].value = prompt;
+    parsedAttr[3].value = prompt;
 
     try {
       const client = new NFTStorage({ token: apiKeys });
-      const imageFile = new File([blob], 'image.jpg', {
+      const imageFile = new File([image], 'image.jpg', {
         type: imageType,
       });
 
@@ -178,6 +188,27 @@ const CreateForm = () => {
             </label>
           </div>
 
+          <div className="text-white">
+            <label
+              htmlFor="eventname"
+              className="block text-sm font-medium text-gray-700 sm:mt-px sm:pt-2"
+            >
+              Upload Image:
+            </label>
+            <input
+              accept="image/*"
+              className="text-sm text-grey-500
+            file:mr-5 file:py-3 file:px-10
+            file:rounded-lg file:border-0
+            file:text-md file:font-semibold  file:text-white
+            file:bg-red-500
+            hover:file:cursor-pointer hover:file:opacity-80"
+              defaultValue={image}
+              onChange={handleImage}
+              type="file"
+            />
+          </div>
+
           <div class="text-gray-400 flex items-center">
             <label for="quantity" class="block mb-2">
               Maximum Supply:
@@ -237,4 +268,4 @@ const CreateForm = () => {
   );
 };
 
-export default CreateForm;
+export default CreateForm2;
