@@ -2,8 +2,6 @@
 import { useContext, useState, useEffect } from 'react';
 import { NFTStorage, File } from 'nft.storage';
 import { FormContext } from '@/context/formContext';
-import Switch from './Switch';
-import axios from 'axios';
 import { useAccount, useNetwork } from 'wagmi';
 import { toast, ToastContainer } from 'react-toastify';
 import { ethers } from 'ethers';

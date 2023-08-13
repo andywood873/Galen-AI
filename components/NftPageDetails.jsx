@@ -18,7 +18,6 @@ import SuccessModal from './modal/SuccessModal';
 const nftAddress = config.avalonV3;
 
 const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
-  //   const solPrice = useSolPrice();
   const [openModal, setOpenModal] = useState(false);
   const [maxSupply, setMaxSupply] = useState(0);
   const [ethPrice, setEthPrice] = useState();
@@ -169,7 +168,7 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
               <AiOutlineEye className="text-xl" />
               <span className="text-sm"> 12</span>
             </p>
-            <h4 className="w-[700px] text-gray-400 italic">
+            <h4 className="w-[700px] text-gray-400 pr-10 italic">
               {description && <p>{description}</p>}
             </h4>
           </div>

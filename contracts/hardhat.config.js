@@ -25,24 +25,12 @@ module.exports = {
     hardhat: {
       // See its defaults
     },
-    zoraGoerli: {
-      url: 'https://testnet.rpc.zora.energy/',
-      accounts: [privateKey],
-      chainId: 999,
-      gasPrice: 8000000000, // 8 Gwei
-    },
     modeTestnet: {
       url: 'https://sepolia.mode.network/',
       accounts: [privateKey],
       chainId: 919,
       gasPrice: 8000000000, // 8 Gwei
     },
-    mumbai: {
-      url: 'https://rpc-mumbai.maticvigil.com',
-      accounts: [privateKey],
-      chainId: 80001,
-      gasPrice: 8000000000, // 8 Gwei
-    }
   },
   solidity: {
     version: '0.8.10',

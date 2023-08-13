@@ -35,9 +35,11 @@ const Nav2 = () => {
             </Link>
             <div className="hidden sm:flex items-center w-full justify-center transition-all">
               <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all">
-                <button type="button" className="text-base font-normal">
-                  Home
-                </button>
+                <Link href="/profile">
+                  <button type="button" className="text-base font-normal">
+                    Home
+                  </button>
+                </Link>
                 <Link href="/explore">
                   <button type="button" className="text-base font-normal">
                     Explore

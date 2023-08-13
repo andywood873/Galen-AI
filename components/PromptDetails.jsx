@@ -4,9 +4,20 @@ import { AiOutlineLock } from 'react-icons/ai';
 import { useAccount } from 'wagmi';
 import extractStrings from '@/utils/extractStrings';
 import { config } from '@/abi';
+import SecondaryPromptModal from './modal/SecondaryPromptModal';
 
 const PromptDetails = ({ tokenId, attributes }) => {
   const { isConnected, address } = useAccount();
+  const nftPrompt = attributes[3].value;
+  const [openModal, setOpenModal] = useState(false);
+
+  const handleCloseModal = () => {
+    setOpenModal(false);
+  };
+
+  const handleOpenModal = () => {
+    setOpenModal(true);
+  };
 
   const API_URL = `https://sepolia.explorer.mode.network/api/v2/tokens/${config.avalonV3}/instances/${tokenId}/holders`;
 
@@ -51,7 +62,10 @@ const PromptDetails = ({ tokenId, attributes }) => {
             </div>
 
             <div className="mt-4">
-              <button className="text-white bg-purple-500 text-md font-bold hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg  sm:w-auto  py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 px-8">
+              <button
+                className="text-white bg-purple-500 text-md font-bold hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 rounded-lg  sm:w-auto  py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 px-8"
+                onClick={handleOpenModal}
+              >
                 Generate Secondary Prompt
               </button>
             </div>
@@ -72,6 +86,11 @@ const PromptDetails = ({ tokenId, attributes }) => {
           </div>
         )}
       </div>
+      <SecondaryPromptModal
+        openMintModal={openModal}
+        handleOnClose={handleCloseModal}
+        prompt={attributes && attributes[3] ? attributes[3].value : ''}
+      />
     </>
   );
 };

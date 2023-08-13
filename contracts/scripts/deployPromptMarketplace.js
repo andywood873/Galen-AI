@@ -7,7 +7,7 @@ async function main() {
     'AvalonPromptMarketplace'
   );
   const avalonPromptMarketplace = await AvalonPromptMarketplace.deploy(
-    '0x1D48Ad40dBC52Ae5B4eE35012dFA00Ba4160e239'
+    '0x473966B257eAD2c43894b65d9BB87f1f23AE7786'
   );
 
   await avalonPromptMarketplace.deployed();
