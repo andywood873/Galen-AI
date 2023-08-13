@@ -16,7 +16,7 @@ import { ethers } from 'ethers';
 const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
-  const [hasListed, setHasListed] = useState(true);
+  const [hasListed, setHasListed] = useState(false);
   const [nftName, setNftName] = useState('');
   const [promptNftName, setPromptNftName] = useState('');
   const [promptNftDescription, setPromptNftDescription] = useState('');
