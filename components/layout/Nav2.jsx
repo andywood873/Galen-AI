@@ -31,7 +31,7 @@ const Nav2 = () => {
                 <SiBlockchaindotcom />
               </div>
               &nbsp;
-              <p className="text-white text-[25px] font-bold">Avalon</p>
+              <p className="text-white text-[25px] font-bold">Galen</p>
             </Link>
             <div className="hidden sm:flex items-center w-full justify-center transition-all">
               <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all">
