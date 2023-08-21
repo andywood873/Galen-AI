@@ -10,11 +10,11 @@ const Hero = () => {
           <span className="text-transparent bg-clip-text bg-primer">
             Monetize Your Creativity
           </span>{' '}
-          with Avalon Generative AI
+          with Galen Generative AI
         </p>
         <p className="max-w-[936px] text-center mt-3 sm:mt-4 text-base sm:text-xl text-gray-170 font-normal transition-all">
           Transform your prompts into digital masterpieces, convert them into
-          NFTs, and sell on our marketplace. With Avalon, your creativity holds
+          NFTs, and sell on our marketplace. With Galen, your creativity holds
           real value.
         </p>
         <button

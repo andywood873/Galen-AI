@@ -1,5 +1,6 @@
 ## Getting Started
 
+<<<<<<< HEAD
 Avalon AI is a groundbreaking app on the Mode Testnet, combining AI, creativity, and blockchain. It enables users to trade AI-generated prompts as NFTs, bridging AI and blockchain innovation for a unique creative experience.
 
 
@@ -15,3 +16,6 @@ AvalonPromptMarketplace contract deployed to: https://sepolia.explorer.mode.netw
 - The User can generate a secondary unique new image using the prompt and also list on the marketplace.
 - The secondary NFT Image prompt is a derivative NFT of the original prompt, and is linked to the tokenID of the original prompt.
 - NOTE: Should the original creator choose to set a royalty amount on their created prompt, it will be deducted from every sale made by the secondary prompt. This ensures that both creators continually get paid for their work
+=======
+This is the Project repo for Galen-AI
+>>>>>>> 6dc6bd38fcf4fa8f08010c63145a39bdc0825b16

@@ -3,7 +3,7 @@ import PromptCard from './cards/PromptCard';
 import ExploreTab from './tab/ExploreTab';
 import { formatAddress } from '@/utils/formatAddress';
 import axios from 'axios';
-import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
+import GalenPromptMarketplace from '@/abi/GalenPromptMarketplace.json';
 import { ethers } from 'ethers';
 import { config } from '@/abi';
 import convertArrayToObject from '@/utils/convertToObject';

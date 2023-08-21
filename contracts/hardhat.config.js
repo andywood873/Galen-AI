@@ -41,9 +41,19 @@ module.exports = {
       },
     },
   },
-  // etherscan: {
-  //   apiKey: {
-  //     goerli: ,
-  //   },
-  // },
+  etherscan: {
+    apiKey: {
+      modeTestnet: 'abc',
+    },
+    customChains: [
+      {
+        network: 'modeTestnet',
+        chainId: 919,
+        urls: {
+          apiURL: 'https://sepolia.explorer.mode.network/api',
+          browserURL: 'https://sepolia.explorer.mode.network/',
+        },
+      },
+    ],
+  },
 };

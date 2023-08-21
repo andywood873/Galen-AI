@@ -3,18 +3,16 @@ const { ethers } = require('hardhat');
 
 async function main() {
   // Deploying the NFTMarketplace contract
-  const AvalonPromptMarketplace = await ethers.getContractFactory(
-    'AvalonPromptMarketplace'
+  const GalenPromptMarketplace = await ethers.getContractFactory(
+    'GalenPromptMarketplace'
   );
-  const avalonPromptMarketplace = await AvalonPromptMarketplace.deploy(
-    '0x473966B257eAD2c43894b65d9BB87f1f23AE7786'
-  );
+  const galenPromptMarketplace = await GalenPromptMarketplace.deploy('');
 
-  await avalonPromptMarketplace.deployed();
+  await galenPromptMarketplace.deployed();
 
   console.log(
-    'AvalonPromptMarketplace contract deployed to:',
-    avalonPromptMarketplace.address
+    'GalenPromptMarketplace contract deployed to:',
+    galenPromptMarketplace.address
   );
 }
 
