@@ -6,14 +6,11 @@ import extractStrings from "@/utils/extractStrings";
 import { config } from "@/abi";
 import SecondaryPromptModal from "./modal/SecondaryPromptModal";
 
-const PromptDetails = ({ tokenId, attributes }) => {
+const PromptDetails = ({ tokenId, prompt }) => {
   const { isConnected, address } = useAccount();
-  const nftPrompt = attributes[3].value;
   const [openModal, setOpenModal] = useState(false);
   const [hasAccess, setHasAccess] = useState(false);
   const [result, setResult] = useState([]);
-
-  // console.log(nftPrompt);
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -67,7 +64,7 @@ const PromptDetails = ({ tokenId, attributes }) => {
       <div className="mx-20">
         {hasAccess ? (
           <div className="text-gray-300 w-full flex-col items-center justify-center text-center mt-[100px] mb-[200px] border border-gray-400 rounded-full py-20 px-16 shadow-2xl">
-            <div className="text-white">{nftPrompt && nftPrompt}</div>
+            <div className="text-white">{prompt && prompt}</div>
 
             <div className="mt-4">
               <button
@@ -97,7 +94,7 @@ const PromptDetails = ({ tokenId, attributes }) => {
       <SecondaryPromptModal
         openMintModal={openModal}
         handleOnClose={handleCloseModal}
-        prompt={attributes && attributes[3] ? attributes[3].value : ""}
+        prompt={prompt && prompt}
       />
     </>
   );

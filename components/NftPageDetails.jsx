@@ -24,14 +24,35 @@ const NftPageDetails = ({
   attributes,
   tokenId,
   owner,
+  metadata,
 }) => {
   const [openModal, setOpenModal] = useState(false);
   const [maxSupply, setMaxSupply] = useState(0);
   const [ethPrice, setEthPrice] = useState();
   const [txHash, setTxHash] = useState("");
+  const [prompt, setPrompt] = useState("");
 
   const handleCloseModal = () => {
     setOpenModal(false);
+  };
+
+  const getIPFSData = async (ipfsUrl) => {
+    // Convert IPFS URL to HTTP URL
+    const httpUrl = ipfsUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
+
+    try {
+      const response = await axios.get(httpUrl);
+      return response.data;
+    } catch (error) {
+      console.error("Error fetching IPFS data:", error);
+      return null;
+    }
+  };
+
+  // Usage
+  const getPrompt = async () => {
+    const data = await getIPFSData(metadata);
+    setPrompt(data.attributes[3].value);
   };
 
   const getSupply = async () => {
@@ -106,6 +127,7 @@ const NftPageDetails = ({
 
   useEffect(() => {
     getTokenPrice();
+    getPrompt();
   }, []);
 
   useEffect(() => {
@@ -123,8 +145,6 @@ const NftPageDetails = ({
   //   const balanceInUsd = solPrice
   //     ? (parseFloat(price) * solPrice).toFixed(2)
   //     : '---';
-
-  const prompt = (attributes && attributes[1] && attributes[1].value) || null;
 
   // console.log(attributes);
 
@@ -226,7 +246,7 @@ const NftPageDetails = ({
           </div>
         </div>
       </div>
-      <PromptDetails tokenId={tokenId} attributes={attributes} />
+      <PromptDetails tokenId={tokenId} prompt={prompt} />
       <ToastContainer />
       <SuccessModal
         openMintModal={openModal}

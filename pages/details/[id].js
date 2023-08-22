@@ -18,7 +18,7 @@ const NftDetails = () => {
 
       const tokens = response.data.nft;
       setResult(tokens);
-      console.log(tokens);
+      console.log("first data", tokens);
     } catch (error) {
       console.error("Error fetching data:", error);
     }
@@ -42,6 +42,7 @@ const NftDetails = () => {
             attributes={result.traits}
             tokenId={result.identifier}
             owner={result.owners[0].address}
+            metadata={result.metadata_url}
           />
         )}
       </div>
