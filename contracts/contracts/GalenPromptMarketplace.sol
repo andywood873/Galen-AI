@@ -5,7 +5,7 @@ import "@openzeppelin/contracts/token/ERC1155/IERC1155.sol";
 import "@openzeppelin/contracts/token/ERC1155/utils/ERC1155Holder.sol";
 import "@openzeppelin/contracts/utils/math/SafeMath.sol";
 
-contract AvalonPromptMarketplace is ERC1155Holder {
+contract GalenPromptMarketplace is ERC1155Holder {
     using SafeMath for uint256;
 
     struct Listing {

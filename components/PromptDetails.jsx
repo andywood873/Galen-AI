@@ -45,6 +45,9 @@ const PromptDetails = ({ tokenId, prompt }) => {
       if (isTokenFound) {
         setHasAccess(true);
         console.log("Has access");
+      } else {
+        setHasAccess(false);
+        console.log("No access");
       }
     } catch (error) {
       console.error("Error fetching data:", error);

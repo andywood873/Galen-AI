@@ -49,15 +49,15 @@ module.exports = {
   },
   etherscan: {
     apiKey: {
-      modeTestnet: "abc",
+      avalancheFuji: "abc",
     },
     customChains: [
       {
-        network: "modeTestnet",
-        chainId: 919,
+        network: "avalancheFuji",
+        chainId: 43113,
         urls: {
-          apiURL: "https://sepolia.explorer.mode.network/api",
-          browserURL: "https://sepolia.explorer.mode.network/",
+          apiURL: "",
+          browserURL: "",
         },
       },
     ],

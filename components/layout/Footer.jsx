@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { socials } from '../../constants';
-import { SiHiveBlockchain } from 'react-icons/si';
+import { socials } from "../../constants";
+import { SiHiveBlockchain } from "react-icons/si";
 
 const Footer = () => (
   <>
@@ -11,9 +11,9 @@ const Footer = () => (
         <div className="mb-[50px] h-[2px] bg-white opacity-10" />
 
         <div className="flex items-center justify-between flex-wrap gap-4">
-          <h4 className="font-extrabold text-[24px] text-white">Avalon</h4>
+          <h4 className="font-extrabold text-[24px] text-white">Galen</h4>
           <p className="font-normal text-[14px] text-white opacity-50">
-            Copyright © 2023 Avalon. All rights reserved.
+            Copyright © 2023 Galen. All rights reserved.
           </p>
 
           <div className="flex gap-4">

@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const Technologies = () => {
   return (
@@ -7,12 +7,12 @@ const Technologies = () => {
         <li>Powered By:</li>
         <li className="flex items-center">
           <img
-            src="https://img.freepik.com/free-photo/golden-yellow-seamless-venetian-plaster-background_24972-294.jpg?w=2000"
+            src="https://cryptologos.cc/logos/avalanche-avax-logo.png"
             alt=""
             className="w-[27px] h-[27px] rounded-full"
           />
           &nbsp;
-          <p className="text-md">Mode Network</p>
+          <p className="text-md">Avalanche</p>
         </li>
         {/* <li className="flex items-center">
           <img src="zora.png" alt="" className="w-[27px]" />
