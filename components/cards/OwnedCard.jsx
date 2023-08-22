@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
-import { useState } from 'react';
-import { formatAddress } from '@/utils/formatAddress';
-import ListNftModal from '../modal/ListNftModal';
+import { useState } from "react";
+import { formatAddress } from "@/utils/formatAddress";
+import ListNftModal from "../modal/ListNftModal";
 
 const OwnedCard = ({
   img,
@@ -42,7 +42,7 @@ const OwnedCard = ({
             </div>
 
             <span className="text-gray-300 absolute top-4 left-4 bg-purple-700 p-1 px-4 text-sm rounded-full font-bold">
-              {model}
+              Stable Diffusion
             </span>
 
             <h3 className="mt-1 text-md text-center font-bold text-gray-300 w-full pt-2">

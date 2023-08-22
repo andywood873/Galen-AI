@@ -1,15 +1,15 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-import { IoCheckmarkCircleOutline } from 'react-icons/io5';
-import Link from 'next/link';
-import AvalonV2 from '@/abi/AvalonV2.json';
-import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
-import { config } from '@/abi';
-import { ethers } from 'ethers';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import Link from "next/link";
+import GalenV3 from "@/abi/GalenV3.json";
+import GalenPromptMarketplace from "@/abi/GalenPromptMarketplace.json";
+import { config } from "@/abi";
+import { ethers } from "ethers";
 
 const ListNftModal = ({
   openMintModal,
@@ -20,7 +20,7 @@ const ListNftModal = ({
   avalaibleQuantity,
 }) => {
   const [nftPrice, setNftPrice] = useState(1);
-  const [network, setNetwork] = useState('zora');
+  const [network, setNetwork] = useState("avalanche");
   const [quantity, setQuantity] = useState(1);
   const [hasListed, setHasListed] = useState(false);
 
@@ -30,36 +30,36 @@ const ListNftModal = ({
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
 
-    const avalonNftContract = new ethers.Contract(
-      config.avalonV2,
-      AvalonV2,
+    const galenNftContract = new ethers.Contract(
+      config.galenV3,
+      GalenV3,
       signer
     );
 
     // Approve the marketplace contract to manage the user's tokens
-    const approveTx = await avalonNftContract.setApprovalForAll(
-      config.avalonPromptMarketplace,
+    const approveTx = await galenNftContract.setApprovalForAll(
+      config.galenPromptMarketplace,
       true
     );
     await approveTx.wait();
-    console.log('Marketplace approved');
+    console.log("Marketplace approved");
 
     // Create a contract instance for the marketplace
     const listPromptContract = new ethers.Contract(
-      config.avalonPromptMarketplace,
-      AvalonPromptMarketplace,
+      config.galenPromptMarketplace,
+      GalenPromptMarketplace,
       signer
     );
 
     const listPrompt = await listPromptContract.createListing(
       tokenId,
-      ethers.utils.parseEther('0.001'),
+      ethers.utils.parseEther("0.001"),
       ethers.BigNumber.from(quantity)
     );
 
     const receipt = await listPrompt.wait();
-    console.log('listPrompt: ', await listPrompt.hash);
-    console.log('receipt: ', receipt);
+    console.log("listPrompt: ", await listPrompt.hash);
+    console.log("receipt: ", receipt);
   };
 
   return (

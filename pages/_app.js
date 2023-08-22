@@ -1,70 +1,73 @@
-import '@/styles/globals.css';
-import { darkTheme } from '@rainbow-me/rainbowkit';
-import { getDefaultWallets } from '@rainbow-me/rainbowkit';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
-import { publicProvider } from 'wagmi/providers/public';
+import "@/styles/globals.css";
+import { darkTheme } from "@rainbow-me/rainbowkit";
+import { getDefaultWallets } from "@rainbow-me/rainbowkit";
+import { configureChains, createClient, WagmiConfig } from "wagmi";
+import { publicProvider } from "wagmi/providers/public";
 import {
   RainbowKitProvider,
   connectorsForWallets,
-} from '@rainbow-me/rainbowkit';
-import '@rainbow-me/rainbowkit/styles.css';
-import { jsonRpcProvider } from 'wagmi/providers/jsonRpc';
-import merge from 'lodash.merge';
-import { FormProvider } from '@/context/formContext';
+} from "@rainbow-me/rainbowkit";
+import { coreWallet } from "@rainbow-me/rainbowkit/wallets";
+import "@rainbow-me/rainbowkit/styles.css";
+import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
+import merge from "lodash.merge";
+import { FormProvider } from "@/context/formContext";
+import { DataProvider } from "@/context/DataContext";
 
-const ZoraGoerli = {
-  id: 999,
-  name: 'Zora Goerli',
-  network: 'zora-goerli',
-  iconUrl: 'https://avatars.githubusercontent.com/u/60056322?s=280&v=4',
-  iconBackground: '#fff',
+const AvalancheTestnet = {
+  id: 43113,
+  name: "Avalanche Fuji Testnet",
+  network: "avalanche-testnet",
+  iconUrl: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
+  iconBackground: "#fff",
   nativeCurrency: {
     decimals: 18,
-    name: 'Zora Goerli Ether',
-    symbol: 'ETH',
+    name: "AVAX",
+    symbol: "AVAX",
   },
   rpcUrls: {
     default: {
-      http: ['https://testnet.rpc.zora.energy/'],
+      http: ["https://api.avax-test.network/ext/bc/C/rpc"],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Zora-Explorer',
-      url: 'https://testnet.explorer.zora.energy/',
+      name: "Snow Trace",
+      url: "https://testnet.snowtrace.io/",
     },
   },
   testnet: true,
 };
 
-const ModeTestnet = {
-  id: 919,
-  name: 'Mode Testnet',
-  network: 'mode-testnet',
-  iconUrl:
-    'https://img.freepik.com/free-photo/golden-yellow-seamless-venetian-plaster-background_24972-294.jpg?w=2000',
-  iconBackground: '#fff',
+const Sepolia = {
+  id: 11155111,
+  name: "Sepolia Testnet",
+  network: "sepolia-testnet",
+  iconUrl: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
+  iconBackground: "#fff",
   nativeCurrency: {
     decimals: 18,
-    name: 'Mode Sepolia Ether',
-    symbol: 'ETH',
+    name: "ETH",
+    symbol: "ETH",
   },
   rpcUrls: {
     default: {
-      http: ['https://sepolia.mode.network/'],
+      http: [
+        "https://eth-sepolia.g.alchemy.com/v2/_WbTkyNvmx_ay8v1kgmIdns9E_Bgu1X1",
+      ],
     },
   },
   blockExplorers: {
     default: {
-      name: 'Mode Explorer',
-      url: 'https://sepolia.explorer.mode.network/',
+      name: "Sepolia Etherscan",
+      url: "https://sepolia.etherscan.io/",
     },
   },
   testnet: true,
 };
 
 const { provider, chains } = configureChains(
-  [ZoraGoerli, ModeTestnet],
+  [Sepolia, AvalancheTestnet],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
@@ -73,7 +76,7 @@ const { provider, chains } = configureChains(
 );
 
 const { connectors } = getDefaultWallets({
-  appName: 'Avalon',
+  appName: "Galen",
   chains,
 });
 
@@ -85,7 +88,7 @@ const wagmiClient = createClient({
 
 const myTheme = merge(darkTheme(), {
   colors: {
-    accentColor: '#A020F0',
+    accentColor: "#A020F0",
   },
 });
 
@@ -94,7 +97,9 @@ export default function App({ Component, pageProps }) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={myTheme} coolMode>
         <FormProvider>
-          <Component {...pageProps} />
+          <DataProvider>
+            <Component {...pageProps} />
+          </DataProvider>
         </FormProvider>
       </RainbowKitProvider>
     </WagmiConfig>
