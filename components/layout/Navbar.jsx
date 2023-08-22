@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import { SiBlockchaindotcom } from 'react-icons/si';
-import Link from 'next/link';
+import React, { useState, useEffect } from "react";
+import { SiBlockchaindotcom } from "react-icons/si";
+import Link from "next/link";
 
 const Navbar = () => {
   const [sticky, setSticky] = useState(false);
@@ -14,9 +14,9 @@ const Navbar = () => {
         setSticky(false);
       }
     };
-    document.addEventListener('scroll', handleScroll);
+    document.addEventListener("scroll", handleScroll);
     return () => {
-      document.removeEventListener('scroll', handleScroll);
+      document.removeEventListener("scroll", handleScroll);
     };
   }, []);
 
@@ -24,8 +24,8 @@ const Navbar = () => {
     <nav
       className={
         sticky
-          ? 'stick transition-all backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 bg-transparent z-50'
-          : ''
+          ? "stick transition-all backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 bg-transparent z-50"
+          : ""
       }
     >
       <section className="container max-w-[64rem] mx-auto px-6 sticky">
@@ -43,9 +43,11 @@ const Navbar = () => {
             </Link>
             <div className="hidden sm:flex items-center w-full justify-center transition-all">
               <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all">
-                <button type="button" className="text-base font-normal">
-                  Home
-                </button>
+                <Link href="/">
+                  <button type="button" className="text-base font-normal">
+                    Home
+                  </button>
+                </Link>
                 <Link href="/explore">
                   <button type="button" className="text-base font-normal">
                     Explore
