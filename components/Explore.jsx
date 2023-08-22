@@ -32,28 +32,6 @@ const Explore = () => {
     }
   };
 
-  // const getAllNFTs = async (tld) => {
-  //   const provider = new ethers.providers.JsonRpcProvider(
-  //     'https://sepolia.mode.network/'
-  //   );
-
-  //   const nftGetterContract = new ethers.Contract(
-  //     config.avalonPromptMarketplace,
-  //     AvalonPromptMarketplace,
-  //     provider
-  //   );
-
-  //   const listed = await nftGetterContract.getListedTokens();
-  //   const stringifiedListed = JSON.stringify(listed);
-  //   console.log(stringifiedListed);
-  //   if (stringifiedListed && stringifiedListed.length > 0) {
-  //     // Check if there's an actual response
-  //     const parsedListed = JSON.parse(stringifiedListed);
-  //     const convertedNFTs = convertArrayToObject(parsedListed);
-  //     setListedNFTs(convertedNFTs);
-  //   }
-  // };
-
   useEffect(() => {
     fetchData();
   }, []);

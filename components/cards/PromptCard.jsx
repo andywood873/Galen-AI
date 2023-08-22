@@ -70,28 +70,6 @@ const PromptCard = ({
     setEthPrice(ethValue);
   };
 
-  const mintNFT = async (e) => {
-    e.preventDefault();
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
-    const signer = provider.getSigner();
-
-    const mintPromptContract = new ethers.Contract(
-      config.avalonV3,
-      AvalonV3,
-      signer
-    );
-
-    const mintAmount = ethers.utils.parseEther(ethPrice.toString());
-
-    const mintPromptNFT = await mintPromptContract.mint(tokenId, {
-      value: mintAmount,
-    });
-    const receipt = await mintPromptNFT.wait();
-    console.log('mintPromptNFT: ', await mintPromptNFT.hash);
-
-    console.log('receipt: ', receipt);
-  };
-
   useEffect(() => {
     getTokenPrice();
     fetchData();
@@ -129,7 +107,7 @@ const PromptCard = ({
               <div className="flex items-center justify-center w-full">
                 <span className="p-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full" />
                 &nbsp;&nbsp;
-                <div className="flex flex-col" onClick={mintNFT}>
+                <div className="flex flex-col">
                   {sellerAddress && formatAddress(sellerAddress)}
                 </div>
               </div>

@@ -1,5 +1,5 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
 
 const SuccessModal = ({ txHash, openMintModal, handleOnClose }) => {
   return (
@@ -44,8 +44,8 @@ const SuccessModal = ({ txHash, openMintModal, handleOnClose }) => {
                   </Dialog.Title>
                   <div className="mt-2">
                     <p className="text-sm text-gray-500">
-                      You can now proceed to verify your transaction on the Mode
-                      explorer.
+                      You can now proceed to verify your transaction on the
+                      Snowtrace explorer.
                       <br /> <br />
                     </p>
                   </div>
@@ -58,11 +58,9 @@ const SuccessModal = ({ txHash, openMintModal, handleOnClose }) => {
                     >
                       <a
                         target="_blank"
-                        href={
-                          'https://sepolia.explorer.mode.network/tx/' + txHash
-                        }
+                        href={"https://testnet.snowtrace.io/tx/" + txHash}
                       >
-                        Confirm on Mode Testnet
+                        Confirm on Testnet
                       </a>
                     </button>
                     &nbsp;&nbsp;&nbsp;
