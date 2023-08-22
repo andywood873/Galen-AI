@@ -1,27 +1,34 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from 'react';
-import { AiOutlineEye } from 'react-icons/ai';
-import { FaLongArrowAltLeft } from 'react-icons/fa';
-import { BsFillPatchQuestionFill } from 'react-icons/bs';
-import { ethers } from 'ethers';
-import { config } from '@/abi';
-import AvalonV3 from '@/abi/AvalonV3.json';
-import { formatAddress } from '@/utils/formatAddress';
-import { formatDate } from '@/utils/formatDate';
-import Link from 'next/link';
-import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import PromptDetails from './PromptDetails';
-import SuccessModal from './modal/SuccessModal';
+import { useEffect, useState } from "react";
+import { AiOutlineEye } from "react-icons/ai";
+import { FaLongArrowAltLeft } from "react-icons/fa";
+import { BsFillPatchQuestionFill } from "react-icons/bs";
+import { ethers } from "ethers";
+import { config } from "@/abi";
+import GalenV3 from "@/abi/GalenV3.json";
+import { formatAddress } from "@/utils/formatAddress";
+import { formatDate } from "@/utils/formatDate";
+import Link from "next/link";
+import axios from "axios";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import PromptDetails from "./PromptDetails";
+import SuccessModal from "./modal/SuccessModal";
 
-const nftAddress = config.avalonV3;
+const nftAddress = config.galenV3;
 
-const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
+const NftPageDetails = ({
+  image,
+  name,
+  description,
+  attributes,
+  tokenId,
+  owner,
+}) => {
   const [openModal, setOpenModal] = useState(false);
   const [maxSupply, setMaxSupply] = useState(0);
   const [ethPrice, setEthPrice] = useState();
-  const [txHash, setTxHash] = useState('');
+  const [txHash, setTxHash] = useState("");
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -29,12 +36,12 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
 
   const getSupply = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
-      'https://sepolia.mode.network/'
+      "https://api.avax-test.network/ext/bc/C/rpc"
     );
 
     const supplyGetterContract = new ethers.Contract(
-      config.avalonV3,
-      AvalonV3,
+      config.galenV3,
+      GalenV3,
       provider
     );
 
@@ -46,12 +53,12 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
 
   const getTokenPrice = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
-      'https://sepolia.mode.network/'
+      "https://api.avax-test.network/ext/bc/C/rpc"
     );
 
     const priceGetterContract = new ethers.Contract(
-      config.avalonV3,
-      AvalonV3,
+      config.galenV3,
+      GalenV3,
       provider
     );
 
@@ -67,11 +74,11 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
 
-    const mintNotification = toast.loading('Please wait! Minting a Prompt NFT');
+    const mintNotification = toast.loading("Please wait! Minting a Prompt NFT");
 
     const mintPromptContract = new ethers.Contract(
-      config.avalonV3,
-      AvalonV3,
+      config.galenV3,
+      GalenV3,
       signer
     );
 
@@ -81,14 +88,14 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
       value: mintAmount,
     });
     const receipt = await mintPromptNFT.wait();
-    console.log('mintPromptNFT: ', await mintPromptNFT.hash);
+    console.log("mintPromptNFT: ", await mintPromptNFT.hash);
 
-    console.log('receipt: ', receipt);
+    console.log("receipt: ", receipt);
 
     // Show success message to the user
     toast.update(mintNotification, {
-      render: 'Successfully Bought NFT Prompt',
-      type: 'success',
+      render: "Successfully Bought NFT Prompt",
+      type: "success",
       isLoading: false,
       autoClose: 7000,
     });
@@ -138,9 +145,7 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
           <div className="flex flex-col justify-center ml-[100px] mt-6 text-gray-300">
             <div className="flex justify-center gap-4 border-b-2 border-gray-500">
               <h1>Creator Address:</h1>
-              {attributes && attributes[1]
-                ? formatAddress(attributes[1].value)
-                : ''}
+              {owner && formatAddress(owner)}
             </div>
 
             <div className="flex justify-center gap-4 mt-3 border-b-2 border-gray-500">
@@ -184,13 +189,11 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
             </div>
             <div className="glassmorphism p-4 text-start w-[210px]">
               <h1 className="font-bold">AI Model:</h1>
-              <p>
-                {attributes && attributes[0] ? attributes[0].value : 'Dall-E'}
-              </p>
+              <p>Stable Diffusion</p>
             </div>
             <div className="glassmorphism p-4 text-start w-[210px]">
               <h1 className="font-bold">Chain:</h1>
-              <p> {attributes && attributes[2] ? attributes[2].value : ''}</p>
+              <p> Avalanche Fuji Testnet</p>
             </div>
             <div className="bg-black/60 border shadow-2xl border-gray-400 p-4 text-start w-[210px]">
               <h1 className="font-bold">Current Supply:</h1>
@@ -223,7 +226,7 @@ const NftPageDetails = ({ image, name, description, attributes, tokenId }) => {
           </div>
         </div>
       </div>
-      <PromptDetails tokenId={tokenId} attributes={attributes} />
+      {/* <PromptDetails tokenId={tokenId} attributes={attributes} /> */}
       <ToastContainer />
       <SuccessModal
         openMintModal={openModal}

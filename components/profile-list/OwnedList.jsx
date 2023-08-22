@@ -1,54 +1,38 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import OwnedCard from '../cards/OwnedCard';
-import { useAccount } from 'wagmi';
-import { config } from '@/abi';
+import { useEffect, useState } from "react";
+import axios from "axios";
+import OwnedCard from "../cards/OwnedCard";
+import { useAccount } from "wagmi";
+import { config } from "@/abi";
+import { DataContext } from "@/context/DataContext";
+import { useContext } from "react";
 
 const OwnedList = () => {
   const [result, setResult] = useState([]);
   const { isConnected, address } = useAccount();
 
-  const API_URL = `https://sepolia.explorer.mode.network/api/v2/addresses/${address}/tokens?type=ERC-1155`;
+  const { nfts } = useContext(DataContext);
 
-  const fetchData = async () => {
-    try {
-      const response = await axios.get(API_URL);
-
-      // Parse the response to retrieve the ERC1155 tokens
-      const tokens = response.data.items;
-
-      console.log(tokens);
-      setResult(tokens);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-    }
-  };
-
-  useEffect(() => {
-    fetchData();
-  }, [address]);
+  // const NftData = nfts.map((item) => item.nft_data[0].external_data);
+  console.log(nfts);
 
   const targetContractAddress = config.avalonV3;
 
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 mt-4 mx-8">
-      {result
-        .filter((token) => token.token.address === targetContractAddress)
-        .map((token) => (
-          <OwnedCard
-            img={token.token_instance.image_url || 'default.jpg'}
-            name={token.token_instance.metadata.name || 'Unknown'}
-            model={
-              token.token_instance.metadata.attributes.find(
-                (attr) => attr.trait_type === 'model'
-              )?.value || 'Unknown'
-            }
-            owner={address || 'Unknown'}
-            nftAddress={token.token.address || 'Unknown'}
-            tokenId={token.token_id || 'Unknown'}
-            quantity={token.value || 'Unknown'}
-          />
-        ))}
+      {nfts.map((item) => (
+        <OwnedCard
+          img={item.image_url || "default.jpg"}
+          name={item.name || "Unknown"}
+          // model={
+          //   item.attributes.find((attr) => attr.trait_type === "model")
+          //     ?.value || "Unknown"
+          // }
+          owner={address || "Unknown"}
+          nftAddress={item.contract || "Unknown"}
+          itemId={item.identifier || "Unknown"}
+          quantity={item.value || "Unknown"}
+        />
+      ))}
     </div>
   );
 };

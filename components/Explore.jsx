@@ -1,29 +1,34 @@
-import React, { useEffect, useState } from 'react';
-import PromptCard from './cards/PromptCard';
-import ExploreTab from './tab/ExploreTab';
-import { formatAddress } from '@/utils/formatAddress';
-import axios from 'axios';
-import GalenPromptMarketplace from '@/abi/GalenPromptMarketplace.json';
-import { ethers } from 'ethers';
-import { config } from '@/abi';
-import convertArrayToObject from '@/utils/convertToObject';
+import React, { useEffect, useState } from "react";
+import PromptCard from "./cards/PromptCard";
+import ExploreTab from "./tab/ExploreTab";
+import { formatAddress } from "@/utils/formatAddress";
+import axios from "axios";
+import GalenPromptMarketplace from "@/abi/GalenPromptMarketplace.json";
+import { ethers } from "ethers";
+import { config } from "@/abi";
+import convertArrayToObject from "@/utils/convertToObject";
 
 const Explore = () => {
   const [listedNFTs, setListedNFTs] = useState([]);
-
-  const API_URL = `https://sepolia.explorer.mode.network/api/v2/tokens/${config.avalonV3}/instances`;
+  const chainName = "avalanche_fuji";
+  const API_URL = `https://testnets-api.opensea.io/v2/chain/${chainName}/contract/${config.galenV3}/nfts`;
+  const apiKey = "474531d79fc84739a3b03950c9430bda";
 
   const fetchData = async () => {
     try {
-      const response = await axios.get(API_URL);
+      const response = await axios.get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      });
 
       // Parse the response to retrieve the ERC1155 tokens
-      const tokens = response.data.items;
+      const tokens = response.data.nfts;
 
       console.log(tokens);
       setListedNFTs(tokens);
     } catch (error) {
-      console.error('Error fetching data:', error);
+      console.error("Error fetching data:", error);
     }
   };
 
@@ -68,19 +73,18 @@ const Explore = () => {
             <PromptCard
               key={index}
               img={nft.image_url}
-              tokenId={nft.id} // Access the tokenId property
-              seller={
-                nft.metadata.attributes.find(
-                  (attr) => attr.trait_type === 'creator'
-                )?.value || 'Unknown'
-              } // Access the address property
-              model={
-                nft.metadata.attributes.find(
-                  (attr) => attr.trait_type === 'model'
-                )?.value || 'Unknown'
-              }
-              name={nft.metadata.name}
-              chainAddress={nft.token.address}
+              tokenId={nft.identifier} // Access the tokenId property
+              // seller={
+              //   nft.attributes.find((attr) => attr.trait_type === "creator")
+              //     ?.value || "Unknown"
+              // }
+              // model={
+              //   nft.attributes.find(
+              //     (attr) => attr.trait_type === "model"
+              //   )?.value || "Unknown"
+              // }
+              name={nft.name}
+              chainAddress={nft.address}
               // price={nft.price} // Access the price property
             />
           ))}

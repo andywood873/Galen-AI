@@ -1,30 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
-import { formatAddress } from '@/utils/formatAddress';
-import { useEffect, useState } from 'react';
-import Link from 'next/link';
-import { ethers } from 'ethers';
-import AvalonV3 from '@/abi/AvalonV3.json';
-import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
-import { config } from '@/abi';
-import { useAccount, useBalance } from 'wagmi';
+import { formatAddress } from "@/utils/formatAddress";
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { ethers } from "ethers";
+import GalenV3 from "@/abi/GalenV3.json";
+// import GalenPromptMarketplace from "@/abi/GalenPromptMarketplace.json";
+import { config } from "@/abi";
+import { useAccount, useBalance } from "wagmi";
+import axios from "axios";
 
-const modeAddress = config.avalonV3;
-const zoraAddress = config.avalonV2;
+const avalancheAddress = config.galenV3;
 
 const getRandomWord = () => {
-  const words = ['Rare', 'Common'];
+  const words = ["Rare", "Common"];
   const randomIndex = Math.floor(Math.random() * words.length);
   return words[randomIndex];
-};
-
-const getChainImage = (chainAddress) => {
-  if (chainAddress === modeAddress) {
-    return 'https://png.pngtree.com/thumb_back/fh260/background/20210707/pngtree-golden-yellow-gradient-abstract-art-background-image_736275.jpg';
-  } else if (chainAddress === zoraAddress) {
-    return 'zora.png';
-  } else {
-    return '3.jpg';
-  }
 };
 
 const PromptCard = ({
@@ -38,21 +28,38 @@ const PromptCard = ({
 }) => {
   const [ethPrice, setEthPrice] = useState();
   const { address, isConnected } = useAccount();
+  const [sellerAddress, setSellerAddress] = useState("");
 
-  // console.log(chain);
+  const chainName = "avalanche_fuji";
+  const API_URL = `https://testnets-api.opensea.io/v2/chain/${chainName}/contract/${config.galenV3}/nfts/${tokenId}`;
+  const apiKey = process.env.NEXT_PUBLIC_OPENSEA_KEY;
 
-  const chainImg = getChainImage(chainAddress);
+  const fetchData = async () => {
+    try {
+      const response = await axios.get(API_URL, {
+        headers: {
+          Authorization: `Bearer ${apiKey}`,
+        },
+      });
 
-  // console.log(tokenId);
+      // Parse the response to retrieve the ERC1155 tokens
+      const tokens = response.data.nft.owners[0].address;
+
+      console.log(tokens);
+      setSellerAddress(tokens);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+    }
+  };
 
   const getTokenPrice = async (e) => {
     const provider = new ethers.providers.JsonRpcProvider(
-      'https://sepolia.mode.network/'
+      "https://api.avax-test.network/ext/bc/C/rpc"
     );
 
     const priceGetterContract = new ethers.Contract(
-      config.avalonV3,
-      AvalonV3,
+      config.galenV3,
+      GalenV3,
       provider
     );
 
@@ -80,13 +87,14 @@ const PromptCard = ({
       value: mintAmount,
     });
     const receipt = await mintPromptNFT.wait();
-    console.log('mintPromptNFT: ', await mintPromptNFT.hash);
+    console.log("mintPromptNFT: ", await mintPromptNFT.hash);
 
-    console.log('receipt: ', receipt);
+    console.log("receipt: ", receipt);
   };
 
   useEffect(() => {
     getTokenPrice();
+    fetchData();
   }, []);
 
   return (
@@ -104,14 +112,14 @@ const PromptCard = ({
           <div className="w-full">
             <div>
               <img
-                src={chainImg}
+                src="https://cryptologos.cc/logos/avalanche-avax-logo.png"
                 alt=""
-                className="w-[34px] h-[35px] p-1 absolute top-4 right-7 bg-purple-800 rounded-2xl"
+                className="w-[34px] h-[35px] p-1 absolute top-4 right-3 bg-purple-800 rounded-2xl"
               />
             </div>
 
             <span className="text-gray-300 absolute top-4 left-4 bg-purple-700 p-1 px-4 text-sm rounded-full font-bold">
-              {model}
+              Stable Diffusion
             </span>
 
             <h3 className="mt-1 text-md text-center font-bold text-gray-300 w-full pt-2">
@@ -122,7 +130,7 @@ const PromptCard = ({
                 <span className="p-3 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 rounded-full" />
                 &nbsp;&nbsp;
                 <div className="flex flex-col" onClick={mintNFT}>
-                  {seller && formatAddress(seller)}
+                  {sellerAddress && formatAddress(sellerAddress)}
                 </div>
               </div>
             </div>

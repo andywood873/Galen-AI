@@ -1,31 +1,31 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import { Dialog, Transition } from '@headlessui/react';
-import { NFTStorage, File } from 'nft.storage';
-import { Fragment, useState } from 'react';
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-import axios from 'axios';
-import { IoCheckmarkCircleOutline } from 'react-icons/io5';
-import { useAccount, useNetwork } from 'wagmi';
-import Link from 'next/link';
-import AvalonV3 from '@/abi/AvalonV3.json';
-import AvalonPromptMarketplace from '@/abi/AvalonPromptMarketplace.json';
-import { config } from '@/abi';
-import { ethers } from 'ethers';
+import { Dialog, Transition } from "@headlessui/react";
+import { NFTStorage, File } from "nft.storage";
+import { Fragment, useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import { IoCheckmarkCircleOutline } from "react-icons/io5";
+import { useAccount, useNetwork } from "wagmi";
+import Link from "next/link";
+import GalenV3 from "@/abi/GalenV3.json";
+import GalenPromptMarketplace from "@/abi/GalenPromptMarketplace.json";
+import { config } from "@/abi";
+import { ethers } from "ethers";
 
 const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
   const { chain } = useNetwork();
   const { address, isConnected } = useAccount();
   const [hasListed, setHasListed] = useState(false);
-  const [nftName, setNftName] = useState('');
-  const [promptNftName, setPromptNftName] = useState('');
-  const [promptNftDescription, setPromptNftDescription] = useState('');
+  const [nftName, setNftName] = useState("");
+  const [promptNftName, setPromptNftName] = useState("");
+  const [promptNftDescription, setPromptNftDescription] = useState("");
   const [attr, setAttr] = useState(
     JSON.stringify([
-      { trait_type: 'model', value: 'Stable Diffusion' },
-      { trait_type: 'creator', value: '' },
-      { trait_type: 'chain', value: '' },
-      { trait_type: 'prompts', value: '' },
+      { trait_type: "model", value: "Stable Diffusion" },
+      { trait_type: "creator", value: "" },
+      { trait_type: "chain", value: "" },
+      { trait_type: "prompts", value: "" },
     ])
   );
   const [base64Image, setBase64Image] = useState(null);
@@ -38,20 +38,20 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
     e.preventDefault();
     // setIsGenerating(true);
     const token = process.env.NEXT_PUBLIC_SD_API_KEY;
-    const modelId = 'stable-diffusion-xl-beta-v2-2-2'; // chosen model id
-    const apiHost = 'https://api.stability.ai';
+    const modelId = "stable-diffusion-xl-beta-v2-2-2"; // chosen model id
+    const apiHost = "https://api.stability.ai";
 
     const mintNotification = toast.loading(
-      'Please wait! Generating your AI Image'
+      "Please wait! Generating your AI Image"
     );
 
     try {
       const response = await axios({
-        method: 'POST',
+        method: "POST",
         url: `${apiHost}/v1/generation/${modelId}/text-to-image`,
         headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
+          "Content-Type": "application/json",
+          Accept: "application/json",
           Authorization: `Bearer ${token}`,
         },
         data: JSON.stringify({
@@ -62,12 +62,12 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
             },
           ],
           cfg_scale: 7,
-          clip_guidance_preset: 'FAST_BLUE',
+          clip_guidance_preset: "FAST_BLUE",
           height: 512,
           width: 512,
           samples: 1,
           steps: 150,
-          style_preset: 'neon-punk',
+          style_preset: "neon-punk",
         }),
       });
 
@@ -82,8 +82,8 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
       }
       // Show success message to the user
       toast.update(mintNotification, {
-        render: 'Creation Completed Successfully',
-        type: 'success',
+        render: "Creation Completed Successfully",
+        type: "success",
         isLoading: false,
         autoClose: 7000,
       });
@@ -99,7 +99,7 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
 
     let base64String = base64Image;
 
-    let imageType = 'image/jpeg';
+    let imageType = "image/jpeg";
 
     // We convert the base64 string to a blob
     let blob = base64ToBlob(base64String, imageType);
@@ -114,12 +114,12 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
     setAttr(JSON.stringify(parsedAttr));
 
     const mintNotification = toast.loading(
-      'Please wait! Tokenizing your Prompt NFT'
+      "Please wait! Tokenizing your Prompt NFT"
     );
 
     try {
       const client = new NFTStorage({ token: apiKeys });
-      const imageFile = new File([blob], 'image.jpg', {
+      const imageFile = new File([blob], "image.jpg", {
         type: imageType,
       });
 
@@ -135,7 +135,7 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
 
-      const tokenUri = 'ipfs://' + metadata + '/metadata.json';
+      const tokenUri = "ipfs://" + metadata + "/metadata.json";
 
       const royaltyFee = 10;
 
@@ -143,8 +143,8 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
       const royaltyFeeWei = ethers.utils.parseUnits(royaltyFee.toString(), 2);
 
       const nftPromptFactory = new ethers.Contract(
-        config.avalonV3,
-        AvalonV3,
+        config.galenV3,
+        GalenV3,
         signer
       );
 
@@ -155,29 +155,29 @@ const SecondaryPromptModal = ({ openMintModal, handleOnClose, prompt }) => {
       );
 
       const receipt = await createPromptNft.wait();
-      console.log('createPromptNft: ', await createPromptNft.hash);
-      console.log('receipt: ', receipt);
+      console.log("createPromptNft: ", await createPromptNft.hash);
+      console.log("receipt: ", receipt);
 
       // Show success message to the user
       toast.update(mintNotification, {
-        render: 'Creation Completed Successfully',
-        type: 'success',
+        render: "Creation Completed Successfully",
+        type: "success",
         isLoading: false,
         autoClose: 7000,
       });
 
       setTxHash(createPromptNft.hash);
       setHasListed(true);
-      setPromptNftName('');
-      setPromptNftDescription('');
-      setMaxSupply('');
-      setNftPrice('');
+      setPromptNftName("");
+      setPromptNftDescription("");
+      setMaxSupply("");
+      setNftPrice("");
     } catch (error) {
       console.log(error);
     }
   };
 
-  function base64ToBlob(base64Data, contentType = '', sliceSize = 512) {
+  function base64ToBlob(base64Data, contentType = "", sliceSize = 512) {
     const byteCharacters = atob(base64Data);
     const byteArrays = [];
 

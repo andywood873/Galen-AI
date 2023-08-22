@@ -7,16 +7,18 @@ import {
   RainbowKitProvider,
   connectorsForWallets,
 } from "@rainbow-me/rainbowkit";
+import { coreWallet } from "@rainbow-me/rainbowkit/wallets";
 import "@rainbow-me/rainbowkit/styles.css";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import merge from "lodash.merge";
 import { FormProvider } from "@/context/formContext";
+import { DataProvider } from "@/context/DataContext";
 
 const AvalancheTestnet = {
   id: 43113,
   name: "Avalanche Fuji Testnet",
   network: "avalanche-testnet",
-  iconUrl: "https://avatars.githubusercontent.com/u/60056322?s=280&v=4",
+  iconUrl: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
   iconBackground: "#fff",
   nativeCurrency: {
     decimals: 18,
@@ -37,8 +39,35 @@ const AvalancheTestnet = {
   testnet: true,
 };
 
+const Sepolia = {
+  id: 11155111,
+  name: "Sepolia Testnet",
+  network: "sepolia-testnet",
+  iconUrl: "https://cryptologos.cc/logos/avalanche-avax-logo.png",
+  iconBackground: "#fff",
+  nativeCurrency: {
+    decimals: 18,
+    name: "ETH",
+    symbol: "ETH",
+  },
+  rpcUrls: {
+    default: {
+      http: [
+        "https://eth-sepolia.g.alchemy.com/v2/_WbTkyNvmx_ay8v1kgmIdns9E_Bgu1X1",
+      ],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: "Sepolia Etherscan",
+      url: "https://sepolia.etherscan.io/",
+    },
+  },
+  testnet: true,
+};
+
 const { provider, chains } = configureChains(
-  [AvalancheTestnet],
+  [Sepolia, AvalancheTestnet],
   [
     jsonRpcProvider({
       rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
@@ -68,7 +97,9 @@ export default function App({ Component, pageProps }) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains} theme={myTheme} coolMode>
         <FormProvider>
-          <Component {...pageProps} />
+          <DataProvider>
+            <Component {...pageProps} />
+          </DataProvider>
         </FormProvider>
       </RainbowKitProvider>
     </WagmiConfig>
