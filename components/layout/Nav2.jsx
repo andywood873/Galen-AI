@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { SiBlockchaindotcom } from 'react-icons/si';
-import Link from 'next/link';
-import ChooseCreate from '../modal/ChooseCreate';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import React, { useState, useEffect } from "react";
+import { SiBlockchaindotcom } from "react-icons/si";
+import Link from "next/link";
+import ChooseCreate from "../modal/ChooseCreate";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 
 const Nav2 = () => {
   const [sticky, setSticky] = useState(false);
@@ -16,8 +16,8 @@ const Nav2 = () => {
     <nav
       className={
         sticky
-          ? 'stick transition-all backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 bg-transparent z-50'
-          : ''
+          ? "stick transition-all backdrop-filter backdrop-blur-lg bg-white bg-opacity-30 bg-transparent z-50"
+          : ""
       }
     >
       <section className="container max-w-[78rem] mx-auto px-6 sticky">
@@ -35,7 +35,7 @@ const Nav2 = () => {
             </Link>
             <div className="hidden sm:flex items-center w-full justify-center transition-all">
               <div className="flex sm:space-x-4 md:space-x-10 justify-center text-white transition-all">
-                <Link href="/profile">
+                <Link href="/">
                   <button type="button" className="text-base font-normal">
                     Home
                   </button>

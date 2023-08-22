@@ -1,6 +1,6 @@
 /* eslint-disable @next/next/no-html-link-for-pages */
-import React from 'react';
-import Technologies from '../Technologies';
+import React from "react";
+import Technologies from "../Technologies";
 
 const Hero = () => {
   return (
@@ -9,13 +9,13 @@ const Hero = () => {
         <p className="w-full text-center text-[32px] leading-[38px] sm:text-7xl sm:leading-[84px] font-bold mt-[calc(128px-96px)] sm:mt-[calc(160px-96px)] transition-all">
           <span className="text-transparent bg-clip-text bg-primer">
             Monetize Your Creativity
-          </span>{' '}
+          </span>{" "}
           with Galen Generative AI
         </p>
         <p className="max-w-[936px] text-center mt-3 sm:mt-4 text-base sm:text-xl text-gray-170 font-normal transition-all">
           Transform your prompts into digital masterpieces, convert them into
-          NFTs, and sell on our marketplace. With Galen, your creativity holds
-          real value.
+          NFTs, and sell on our marketplace. Explore Premium AI Prompts on
+          Galen's Marketplace!
         </p>
         <button
           type="button"
