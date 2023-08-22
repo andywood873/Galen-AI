@@ -39,7 +39,7 @@ const NftDetails = () => {
             image={result.image_url}
             name={result.name}
             description={result.description}
-            attributes={result.attributes}
+            attributes={result.traits}
             tokenId={result.identifier}
             owner={result.owners[0].address}
           />

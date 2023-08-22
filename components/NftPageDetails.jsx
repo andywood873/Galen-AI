@@ -63,7 +63,7 @@ const NftPageDetails = ({
     );
 
     const getTokenPrice = await priceGetterContract.getPrice(tokenId);
-    console.log(getTokenPrice._hex);
+    // console.log(getTokenPrice._hex);
     const bigNumber = ethers.BigNumber.from(getTokenPrice._hex);
     const ethValue = ethers.utils.formatEther(bigNumber);
     setEthPrice(ethValue);
@@ -226,7 +226,7 @@ const NftPageDetails = ({
           </div>
         </div>
       </div>
-      {/* <PromptDetails tokenId={tokenId} attributes={attributes} /> */}
+      <PromptDetails tokenId={tokenId} attributes={attributes} />
       <ToastContainer />
       <SuccessModal
         openMintModal={openModal}

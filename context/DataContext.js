@@ -12,7 +12,7 @@ export const DataProvider = ({ children }) => {
 
   const fetchData = async () => {
     setIsLoading(true);
-    const apiKey = "474531d79fc84739a3b03950c9430bda";
+    const apiKey = process.env.NEXT_PUBLIC_OPENSEA_KEY;
     const chainName = "avalanche_fuji";
     const walletAddress = address;
     const url = `https://testnets-api.opensea.io/v2/chain/${chainName}/account/${walletAddress}/nfts?limit=50`;
