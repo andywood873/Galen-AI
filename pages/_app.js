@@ -7,7 +7,14 @@ import {
   RainbowKitProvider,
   connectorsForWallets,
 } from "@rainbow-me/rainbowkit";
-import { coreWallet } from "@rainbow-me/rainbowkit/wallets";
+import {
+  injectedWallet,
+  rainbowWallet,
+  metaMaskWallet,
+  coinbaseWallet,
+  walletConnectWallet,
+} from "@rainbow-me/rainbowkit/wallets";
+import { coreWallet } from '@rainbow-me/rainbowkit/wallets';
 import "@rainbow-me/rainbowkit/styles.css";
 import { jsonRpcProvider } from "wagmi/providers/jsonRpc";
 import merge from "lodash.merge";
@@ -75,10 +82,20 @@ const { provider, chains } = configureChains(
   ]
 );
 
-const { connectors } = getDefaultWallets({
-  appName: "Galen",
-  chains,
-});
+const projectId = process.env.NEXT_PUBLIC_WALLETCONNECT_ID;
+
+const connectors = connectorsForWallets([
+  {
+    groupName: "Suggested",
+    wallets: [
+      injectedWallet({ chains }),
+      rainbowWallet({ projectId, chains }),
+      metaMaskWallet({ projectId, chains }),
+      coinbaseWallet({ chains, appName: "Galen" }),
+      walletConnectWallet({ projectId, chains }),
+    ],
+  },
+]);
 
 const wagmiClient = createClient({
   autoConnect: true,

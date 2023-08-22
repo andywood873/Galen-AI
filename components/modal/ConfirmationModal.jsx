@@ -1,6 +1,6 @@
-import { Dialog, Transition } from '@headlessui/react';
-import { Fragment, useState } from 'react';
-import Link from 'next/link';
+import { Dialog, Transition } from "@headlessui/react";
+import { Fragment, useState } from "react";
+import Link from "next/link";
 
 const MintedModal = ({ txHash, openMintModal, handleOnClose }) => {
   return (
@@ -55,9 +55,11 @@ const MintedModal = ({ txHash, openMintModal, handleOnClose }) => {
                     <button
                       type="button"
                       className="text-white bg-slate-900 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-xl text-sm px-4 py-2 hover:opacity-70"
-                      //   onClick={closeModal}
                     >
-                      <a target="_blank" href={'' + txHash}>
+                      <a
+                        target="_blank"
+                        href={"https://testnet.snowtrace.io/tx/" + txHash}
+                      >
                         Confirm on Explorer
                       </a>
                     </button>
@@ -66,7 +68,6 @@ const MintedModal = ({ txHash, openMintModal, handleOnClose }) => {
                       <button
                         type="button"
                         className="text-white bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-xl text-sm px-4 py-2 hover:opacity-70"
-                        //   onClick={closeModal}
                       >
                         View in profile
                       </button>
