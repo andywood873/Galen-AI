@@ -1,18 +1,18 @@
 /* eslint-disable @next/next/no-img-element */
-import { formatAddress } from "@/utils/formatAddress";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import { ethers } from "ethers";
-import GalenV3 from "@/abi/GalenV3.json";
+import { formatAddress } from '@/utils/formatAddress';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ethers } from 'ethers';
+import GalenV3 from '@/abi/GalenV3.json';
 // import GalenPromptMarketplace from "@/abi/GalenPromptMarketplace.json";
-import { config } from "@/abi";
-import { useAccount, useBalance } from "wagmi";
-import axios from "axios";
+import { config } from '@/abi';
+import { useAccount, useBalance } from 'wagmi';
+import axios from 'axios';
 
 const avalancheAddress = config.galenV3;
 
 const getRandomWord = () => {
-  const words = ["Rare", "Common"];
+  const words = ['Rare', 'Common'];
   const randomIndex = Math.floor(Math.random() * words.length);
   return words[randomIndex];
 };
@@ -28,9 +28,9 @@ const PromptCard = ({
 }) => {
   const [ethPrice, setEthPrice] = useState();
   const { address, isConnected } = useAccount();
-  const [sellerAddress, setSellerAddress] = useState("");
+  const [sellerAddress, setSellerAddress] = useState('');
 
-  const chainName = "avalanche_fuji";
+  const chainName = 'avalanche_fuji';
   const API_URL = `https://testnets-api.opensea.io/v2/chain/${chainName}/contract/${config.galenV3}/nfts/${tokenId}`;
   const apiKey = process.env.NEXT_PUBLIC_OPENSEA_KEY;
 
@@ -48,13 +48,13 @@ const PromptCard = ({
       console.log(tokens);
       setSellerAddress(tokens);
     } catch (error) {
-      console.error("Error fetching data:", error);
+      console.error('Error fetching data:', error);
     }
   };
 
   const getTokenPrice = async (e) => {
     const provider = new ethers.providers.JsonRpcProvider(
-      "https://api.avax-test.network/ext/bc/C/rpc"
+      'https://api.avax-test.network/ext/bc/C/rpc'
     );
 
     const priceGetterContract = new ethers.Contract(
@@ -87,9 +87,9 @@ const PromptCard = ({
       value: mintAmount,
     });
     const receipt = await mintPromptNFT.wait();
-    console.log("mintPromptNFT: ", await mintPromptNFT.hash);
+    console.log('mintPromptNFT: ', await mintPromptNFT.hash);
 
-    console.log("receipt: ", receipt);
+    console.log('receipt: ', receipt);
   };
 
   useEffect(() => {
@@ -138,7 +138,7 @@ const PromptCard = ({
             <div className="flex justify-center text-gray-300 gap-12 pt-2">
               <div className="flex flex-col">
                 <p>Price:</p>
-                <p>{ethPrice} ETH </p>
+                <p>{ethPrice} AVAX </p>
               </div>
               <div className="flex flex-col">
                 <p>Rarity:</p>

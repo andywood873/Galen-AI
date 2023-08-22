@@ -1,19 +1,19 @@
 /* eslint-disable @next/next/no-img-element */
-import { useEffect, useState } from "react";
-import { AiOutlineEye } from "react-icons/ai";
-import { FaLongArrowAltLeft } from "react-icons/fa";
-import { BsFillPatchQuestionFill } from "react-icons/bs";
-import { ethers } from "ethers";
-import { config } from "@/abi";
-import GalenV3 from "@/abi/GalenV3.json";
-import { formatAddress } from "@/utils/formatAddress";
-import { formatDate } from "@/utils/formatDate";
-import Link from "next/link";
-import axios from "axios";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import PromptDetails from "./PromptDetails";
-import SuccessModal from "./modal/SuccessModal";
+import { useEffect, useState } from 'react';
+import { AiOutlineEye } from 'react-icons/ai';
+import { FaLongArrowAltLeft } from 'react-icons/fa';
+import { BsFillPatchQuestionFill } from 'react-icons/bs';
+import { ethers } from 'ethers';
+import { config } from '@/abi';
+import GalenV3 from '@/abi/GalenV3.json';
+import { formatAddress } from '@/utils/formatAddress';
+import { formatDate } from '@/utils/formatDate';
+import Link from 'next/link';
+import axios from 'axios';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import PromptDetails from './PromptDetails';
+import SuccessModal from './modal/SuccessModal';
 
 const nftAddress = config.galenV3;
 
@@ -29,8 +29,8 @@ const NftPageDetails = ({
   const [openModal, setOpenModal] = useState(false);
   const [maxSupply, setMaxSupply] = useState(0);
   const [ethPrice, setEthPrice] = useState();
-  const [txHash, setTxHash] = useState("");
-  const [prompt, setPrompt] = useState("");
+  const [txHash, setTxHash] = useState('');
+  const [prompt, setPrompt] = useState('');
 
   const handleCloseModal = () => {
     setOpenModal(false);
@@ -38,13 +38,13 @@ const NftPageDetails = ({
 
   const getIPFSData = async (ipfsUrl) => {
     // Convert IPFS URL to HTTP URL
-    const httpUrl = ipfsUrl.replace("ipfs://", "https://ipfs.io/ipfs/");
+    const httpUrl = ipfsUrl.replace('ipfs://', 'https://ipfs.io/ipfs/');
 
     try {
       const response = await axios.get(httpUrl);
       return response.data;
     } catch (error) {
-      console.error("Error fetching IPFS data:", error);
+      console.error('Error fetching IPFS data:', error);
       return null;
     }
   };
@@ -57,7 +57,7 @@ const NftPageDetails = ({
 
   const getSupply = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
-      "https://api.avax-test.network/ext/bc/C/rpc"
+      'https://api.avax-test.network/ext/bc/C/rpc'
     );
 
     const supplyGetterContract = new ethers.Contract(
@@ -74,7 +74,7 @@ const NftPageDetails = ({
 
   const getTokenPrice = async () => {
     const provider = new ethers.providers.JsonRpcProvider(
-      "https://api.avax-test.network/ext/bc/C/rpc"
+      'https://api.avax-test.network/ext/bc/C/rpc'
     );
 
     const priceGetterContract = new ethers.Contract(
@@ -95,7 +95,7 @@ const NftPageDetails = ({
     const provider = new ethers.providers.Web3Provider(window.ethereum);
     const signer = provider.getSigner();
 
-    const mintNotification = toast.loading("Please wait! Minting a Prompt NFT");
+    const mintNotification = toast.loading('Please wait! Minting a Prompt NFT');
 
     const mintPromptContract = new ethers.Contract(
       config.galenV3,
@@ -109,14 +109,14 @@ const NftPageDetails = ({
       value: mintAmount,
     });
     const receipt = await mintPromptNFT.wait();
-    console.log("mintPromptNFT: ", await mintPromptNFT.hash);
+    console.log('mintPromptNFT: ', await mintPromptNFT.hash);
 
-    console.log("receipt: ", receipt);
+    console.log('receipt: ', receipt);
 
     // Show success message to the user
     toast.update(mintNotification, {
-      render: "Successfully Bought NFT Prompt",
-      type: "success",
+      render: 'Successfully Bought NFT Prompt',
+      type: 'success',
       isLoading: false,
       autoClose: 7000,
     });
@@ -228,7 +228,7 @@ const NftPageDetails = ({
             </h2>
             <div className="border w-[600px] border-gray-300 MT-6" />
             <p className="text-xl my-4 text-gray-200 text-[17px]">
-              <span className="">Price:</span> {ethPrice} ETH &nbsp;
+              <span className="">Price:</span> {ethPrice} AVAX &nbsp;
               {/* <span className="text-[16px] text-gray-300">
                 ~(${balanceInUsd})
               </span> */}
