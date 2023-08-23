@@ -28,6 +28,16 @@ Galen AI is an innovative AI prompt marketplace built on the Avalanche Fuji Test
 | **NFT Metadata Retrieval** | [OpenSea API](https://docs.opensea.io/reference/api-overview)                                                                                    | Integrated to fetch comprehensive NFT metadata from the Avalanche Fuji blockchain.                                                                                                                                               |
 | **Blockchain Interaction** | [Ethers.js](https://docs.ethers.io/)                                                                                  | Facilitates seamless interaction with smart contracts on the Ethereum blockchain.                                                                                                                                                 |
 | **Authentication**     | [RainbowKit](https://www.rainbowkit.com/docs/introduction) & [WAGMI](https://wagmi.sh/)                               | Integrated to provide a streamlined and secure sign-in experience.                                                                                                                                                               |
+## Screenshots
+![Home](https://github.com/0xTemplar/Galen-AI/assets/124390899/cdf60494-f226-403c-9b1b-f65ecfd61099)
+
+![explore](https://github.com/0xTemplar/Galen-AI/assets/124390899/a6e1f4a9-474d-4ed1-acab-c1edd1a927dc)
+
+![modal](https://github.com/0xTemplar/Galen-AI/assets/124390899/70588905-eab4-48cc-ac30-40a8fd46bd7b)
+
+![create page](https://github.com/0xTemplar/Galen-AI/assets/124390899/17ab0f48-643f-4f18-b08b-ee69b7e5f68d)
+
+![detail](https://github.com/0xTemplar/Galen-AI/assets/124390899/21e52d06-38a5-49b1-acfa-9389a0340f91)
 
 
 ## Getting Started
