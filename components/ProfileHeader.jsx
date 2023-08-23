@@ -5,8 +5,12 @@ import { MdContentCopy } from 'react-icons/md';
 import { AiOutlineUpload } from 'react-icons/ai';
 import { FiMoreHorizontal } from 'react-icons/fi';
 import { BsFacebook, BsLinkedin, BsTwitter, BsInstagram } from 'react-icons/bs';
+import { useAccount } from 'wagmi';
+import { formatAddress } from '@/utils/formatAddress';
 
 const ProfileHeader = () => {
+  const { address } = useAccount;
+
   return (
     <div className=" mt-[2px]  md:flex-row flex-col shadow-2xl ">
       <img src="profile-bg8.jpg" alt="" className="w-screen h-[220px]" />
@@ -21,7 +25,7 @@ const ProfileHeader = () => {
           <div className="text-white mt-10">
             <div className="font-bold flex justify-between">
               <div className="flex gap-2 text-2xl">
-                <h1>GhostxD</h1>
+                <h1>User</h1>
                 <GoVerified className="text-purple-600 font-bold text-3xl mb-2" />
               </div>
               <div className="flex gap-3 items-center">
@@ -36,7 +40,9 @@ const ProfileHeader = () => {
               </div>
             </div>
             <div className="flex items-center gap-3">
-              <p className="text-md text-gray-400 font-bold">0x3749...778h3</p>
+              <p className="text-md text-gray-400 font-bold">
+                {address & formatAddress(address)}
+              </p>
               <MdContentCopy className="text-gray-300 text-xl cursor-pointer" />
             </div>
             <div>
