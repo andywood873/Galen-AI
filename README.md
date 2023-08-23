@@ -15,6 +15,7 @@ Galen AI is an innovative AI prompt marketplace built on the Avalanche Fuji Test
 
 ## Smart Contract Address
 - GalenV3: https://testnet.snowtrace.io/address/0xFf6D42E3d686f046E17aDf7322401568009DA1F7
+- Galen Prompt Marketplace: https://testnet.snowtrace.io/address/0x6F8C1Fc1BA34eb9b3de40777c7E314475B40b554
 
 ## Tech Stack
 
