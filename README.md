@@ -9,7 +9,7 @@ Galen AI is an innovative AI prompt marketplace built on the Avalanche Fuji Test
 
 - Tokengated Prompts: In a unique twist, the prompts used for generating images are tokengated. This means only users who purchase the NFT can access the original prompt. This allows them to generate secondary images using the exclusive prompt they've acquired.
 
-- Smart Contract Integration: While the UI integration is still in progress, the underlying smart contract for the marketplace has been successfully deployed. The demo version allows users to buy NFTs directly from the smart contract.
+- Smart Contract Integration: While the UI integration is still in progress, the underlying smart contract for the marketplace has been successfully built and deployed. The demo version allows users to buy NFTs directly from the NFT smart contract.
 
 - OpenSea API Integration: Galen AI leverages the OpenSea API to fetch all NFT data from the Avalanche testnet. This integration also facilitates the tokengating of prompts.
 
