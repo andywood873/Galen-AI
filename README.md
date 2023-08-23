@@ -16,6 +16,19 @@ Galen AI is an innovative AI prompt marketplace built on the Avalanche Fuji Test
 ## Smart Contract Address
 - GalenV3: https://testnet.snowtrace.io/address/0xFf6D42E3d686f046E17aDf7322401568009DA1F7
 
+## Tech Stack
+
+| Component             | Technology/Service                                                                                                   | Description                                                                                                                                                                                                                       |
+|-----------------------|-----------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Image Generation**  | [Stable Diffusion](https://stability.ai/stablediffusion) - "stable-diffusion-xl-beta-v2-2-2" release from Stability AI | Utilized for generating high-quality images based on user-defined prompts.                                                                                                                                                       |
+| **NFT Metadata Storage** | [NFT.storage](https://nft.storage/)                                                                                   | Employs IPFS to ensure decentralized and persistent storage of prompt NFT metadata.                                                                                                                                              |
+| **Smart Contract Development** | [Solidity](https://soliditylang.org/)                                                                                 | Used to craft the ERC1155 Smart Contract that facilitates AI prompt to NFT conversion and underpins the marketplace functionalities.                                                                                              |
+|                       | ERC1155 Marketplace                                                                                                   | The smart contract for the marketplace has been built and deployed, but is yet to be implemented in the UI. For the demo, users can create and purchase NFTs directly from the NFT Smart contract.                                                                                                   |
+| **NFT Metadata Retrieval** | [OpenSea API](https://docs.opensea.io/reference/api-overview)                                                                                    | Integrated to fetch comprehensive NFT metadata from the Avalanche Fuji blockchain.                                                                                                                                               |
+| **Blockchain Interaction** | [Ethers.js](https://docs.ethers.io/)                                                                                  | Facilitates seamless interaction with smart contracts on the Ethereum blockchain.                                                                                                                                                 |
+| **Authentication**     | [RainbowKit](https://www.rainbowkit.com/docs/introduction) & [WAGMI](https://wagmi.sh/)                               | Integrated to provide a streamlined and secure sign-in experience.                                                                                                                                                               |
+
+
 ## Getting Started
 ### Clone the repository
 ```git clone https://github.com/0xTemplar/Galen-AI.git```
