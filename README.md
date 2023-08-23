@@ -13,6 +13,9 @@ Galen AI is an innovative AI prompt marketplace built on the Avalanche Fuji Test
 
 - OpenSea API Integration: Galen AI leverages the OpenSea API to fetch all NFT data from the Avalanche testnet. This integration also facilitates the tokengating of prompts.
 
+## Smart Contract Address
+- GalenV3: https://testnet.snowtrace.io/address/0xFf6D42E3d686f046E17aDf7322401568009DA1F7
+
 ## Getting Started
 ### Clone the repository
 ```git clone https://github.com/0xTemplar/Galen-AI.git```
