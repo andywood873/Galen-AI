@@ -8,7 +8,7 @@ const Hero = () => {
       <div className="flex flex-col items-center">
         <p className="w-full text-center text-[32px] leading-[38px] sm:text-7xl sm:leading-[84px] font-bold mt-[calc(128px-96px)] sm:mt-[calc(160px-96px)] transition-all">
           <span className="text-transparent bg-clip-text bg-primer">
-            Monetize Your Creativity
+            Unleash Your Creativity
           </span>{" "}
           with Galen Generative AI
         </p>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { SiBlockchaindotcom } from "react-icons/si";
 import Link from "next/link";
 import ChooseCreate from "../modal/ChooseCreate";
